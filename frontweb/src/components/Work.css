@@ -1,0 +1,26 @@
+.work {
+  padding: 0 var(--gutter) 8rem;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin: 0 auto;
+}
+
+.work__list {
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.work__item {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.work__link {
+  display: block;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  transition: color 0.15s ease;
+}
+
+.work__link:hover {
+  color: var(--color-mint);
+}

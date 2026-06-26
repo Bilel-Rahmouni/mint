@@ -1,0 +1,7 @@
+.footer {
+  padding: var(--gutter);
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin: 0 auto;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}

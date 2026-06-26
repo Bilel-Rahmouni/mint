@@ -1,0 +1,44 @@
+:root {
+  --color-bg: #0a0a0a;
+  --color-line: rgba(255, 255, 255, 0.06);
+  --color-text: #e5e5e5;
+  --color-muted: #666;
+  --color-mint: #4ade80;
+  --font: 'Sora', system-ui, sans-serif;
+  --gutter: clamp(1.5rem, 5vw, 4rem);
+  --max: 36rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 300;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-muted);
+}

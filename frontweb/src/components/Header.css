@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gutter);
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin: 0 auto;
+}
+
+.header__email {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.header__email:hover {
+  color: var(--color-text);
+}
