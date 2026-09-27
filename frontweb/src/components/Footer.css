@@ -1,7 +1,19 @@
 .footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   padding: var(--gutter);
   max-width: calc(var(--max) + var(--gutter) * 2);
   margin: 0 auto;
   font-size: 0.75rem;
   color: var(--color-muted);
+}
+
+.footer__brand {
+  transition: opacity 0.15s ease;
+}
+
+.footer__brand:hover {
+  opacity: 0.8;
 }
