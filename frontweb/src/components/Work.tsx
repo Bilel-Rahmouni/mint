@@ -1,9 +1,11 @@
+import { usePortfolio } from '../hooks/usePortfolio'
+import type { PortfolioProject } from '../hooks/usePortfolio'
 import './Work.css'
 
-const projects = [
+const fallbackProjects: PortfolioProject[] = [
   { name: 'wyngo', href: 'https://wyngo.co' },
-  { name: 'cash cash', href: 'https://cashcash.tn' },
-  { name: 'dozone', href: 'https://dozone.io' },
+  { name: 'cash cash', href: 'https://cash-game.site' },
+  { name: 'dozone', href: 'https://dozone.site' },
   { name: 'onecrew.pro', href: 'https://onecrew.pro' },
   { name: 'onecrew.me', href: 'https://onecrew.me' },
   {
@@ -12,11 +14,13 @@ const projects = [
   },
   { name: 'koultounsi.com', href: 'https://koultounsi.com' },
   { name: 'tounsy.com', href: 'https://tounsy.com' },
-  { name: 'ultimate calculator', href: 'https://ultimatecalculator.app' },
-  { name: 'brain gym', href: 'https://braingym.tn' },
+  { name: 'ultimate calculator', href: 'https://ultimatecalculator.site' },
+  { name: 'brain gym', href: 'https://brain-gym.site' },
 ]
 
 export function Work() {
+  const projects = usePortfolio(fallbackProjects)
+
   return (
     <section className="work">
       <ul className="work__list">

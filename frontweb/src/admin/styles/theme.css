@@ -1,0 +1,50 @@
+/* Extends the brand tokens in src/index.css */
+.admin {
+  --color-bg-deep: #060706;
+  --color-surface: rgba(18, 20, 19, 0.72);
+  --color-surface-solid: #111312;
+  --color-surface-raised: #171a18;
+  --color-surface-hover: #1c201d;
+  --color-line-strong: rgba(255, 255, 255, 0.11);
+  --color-text-strong: #f6f8f7;
+  --color-muted-soft: #8b928d;
+  --color-faint: #3d423f;
+
+  --color-mint-strong: #6ff0a0;
+  --color-mint-deep: #16a34a;
+  --color-mint-soft: rgba(74, 222, 128, 0.1);
+  --color-mint-line: rgba(74, 222, 128, 0.28);
+  --color-danger: #ff6b5e;
+  --color-danger-soft: rgba(255, 107, 94, 0.12);
+  --color-danger-line: rgba(255, 107, 94, 0.32);
+  --color-warn: #f7b955;
+  --color-warn-soft: rgba(247, 185, 85, 0.12);
+  --color-warn-line: rgba(247, 185, 85, 0.3);
+  --color-sky: #7cc8ff;
+  --color-sky-soft: rgba(124, 200, 255, 0.12);
+  --color-sky-line: rgba(124, 200, 255, 0.3);
+  --color-idle: #5b625e;
+  --color-tooltip: rgba(10, 12, 11, 0.94);
+
+  --gradient-mint: linear-gradient(135deg, #6ff0a0 0%, #4ade80 45%, #16a34a 100%);
+  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0) 60%);
+
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  --shadow-lift: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 28px 60px -28px rgba(0, 0, 0, 0.95),
+    0 0 0 1px var(--color-mint-line);
+  --shadow-glow: 0 0 24px -4px rgba(74, 222, 128, 0.55);
+  --shadow-modal: 0 40px 120px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px var(--color-line-strong);
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration: 180ms;
+
+  --sidebar-width: 236px;
+  --page-gutter: clamp(1.25rem, 3vw, 2.75rem);
+}

@@ -1,0 +1,105 @@
+.web-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.web-chart--empty {
+  display: grid;
+  place-items: center;
+  height: 14rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-faint);
+  border-radius: var(--radius);
+}
+
+.web-chart__plot {
+  position: relative;
+  height: 14rem;
+  animation: web-chart-in 420ms var(--ease);
+}
+
+.web-chart__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.web-chart__stop-top {
+  stop-color: var(--color-mint);
+  stop-opacity: 0.32;
+}
+
+.web-chart__stop-bottom {
+  stop-color: var(--color-mint);
+  stop-opacity: 0;
+}
+
+.web-chart__line {
+  fill: none;
+  stroke: var(--color-mint-strong);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px var(--color-mint-line));
+}
+
+.web-chart__cursor {
+  stroke: var(--color-line-strong);
+  stroke-dasharray: 3 3;
+}
+
+.web-chart__dot {
+  position: absolute;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--color-mint-strong);
+  box-shadow: var(--shadow-glow);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.web-chart__tooltip {
+  position: absolute;
+  top: -0.5rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 7rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.68rem;
+  color: var(--color-muted-soft);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-tooltip);
+  box-shadow: var(--shadow-lift);
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+.web-chart__tooltip strong {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-mint-strong);
+}
+
+.web-chart__range {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: var(--color-muted);
+}
+
+@keyframes web-chart-in {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}

@@ -1,0 +1,55 @@
+.revenue-issues {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.revenue-issues__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-line);
+  border-left: 2px solid var(--color-warn-line);
+  background: linear-gradient(90deg, var(--color-warn-soft), transparent 70%);
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+  animation: revenue-issue-in 360ms var(--ease) both;
+}
+
+.revenue-issues__row--danger {
+  border-left-color: var(--color-danger-line);
+  background: linear-gradient(90deg, var(--color-danger-soft), transparent 70%);
+}
+
+.revenue-issues__row:hover {
+  transform: translateX(2px);
+  background-color: var(--color-surface-hover);
+}
+
+.revenue-issues__source {
+  flex-shrink: 0;
+  width: 3.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.revenue-issues__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text);
+}
+
+@keyframes revenue-issue-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

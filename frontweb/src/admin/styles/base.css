@@ -1,0 +1,83 @@
+.admin {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  color-scheme: dark;
+  background-color: var(--color-bg-deep);
+  background-image:
+    radial-gradient(60rem 40rem at 88% -12%, rgba(74, 222, 128, 0.11), transparent 60%),
+    radial-gradient(48rem 36rem at -10% 110%, rgba(22, 163, 74, 0.08), transparent 60%),
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: auto, auto, 56px 56px, 56px 56px;
+  background-attachment: fixed;
+}
+
+.admin::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* :where keeps these at element specificity so component classes always win */
+:where(.admin) a:hover {
+  color: inherit;
+}
+
+:where(.admin) :is(button, input, textarea, select) {
+  font: inherit;
+  color: inherit;
+}
+
+:where(.admin) button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+:where(.admin) :focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:where(.admin) ::selection {
+  background: var(--color-mint-soft);
+  color: var(--color-mint-strong);
+}
+
+.admin .mono {
+  font-family: var(--font-mono);
+  font-feature-settings: 'zero' 1;
+}
+
+.admin .reveal {
+  opacity: 0;
+  animation: admin-reveal 520ms var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes admin-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin *,
+  .admin *::before,
+  .admin *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+}

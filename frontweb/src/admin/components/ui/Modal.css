@@ -1,0 +1,104 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgba(3, 4, 3, 0.72);
+  backdrop-filter: blur(10px) saturate(120%);
+  animation: modal-fade 200ms var(--ease);
+}
+
+.modal__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: calc(100dvh - 3rem);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-surface), var(--color-surface-solid);
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+  animation: modal-rise 320ms var(--ease);
+}
+
+.modal__panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-mint), transparent);
+  opacity: 0.6;
+}
+
+.modal__panel--md {
+  max-width: 40rem;
+}
+
+.modal__panel--sm {
+  max-width: 26rem;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 1.6rem 1rem;
+}
+
+.modal__title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text-strong);
+}
+
+.modal__close {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  color: var(--color-muted-soft);
+  transition:
+    color var(--duration) var(--ease),
+    background var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
+}
+
+.modal__close:hover {
+  color: var(--color-text-strong);
+  background: var(--color-surface-hover);
+  transform: rotate(90deg);
+}
+
+.modal__body {
+  padding: 0.25rem 1.6rem 1.5rem;
+  overflow-y: auto;
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 1rem 1.6rem;
+  border-top: 1px solid var(--color-line);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+}

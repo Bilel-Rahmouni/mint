@@ -1,0 +1,232 @@
+export type ProjectType = 'website' | 'app'
+
+export type LastCheck = {
+  up: boolean
+  statusCode?: number
+  responseTimeMs?: number
+  error?: string
+  checkedAt: string
+}
+
+export type SslInfo = {
+  validTo?: string
+  issuer?: string
+  error?: string
+  checkedAt?: string
+}
+
+export type DomainInfo = {
+  name?: string
+  expiresAt?: string
+  registrar?: string
+  error?: string
+  checkedAt?: string
+}
+
+export type SparkPoint = { t: number | null; up: boolean }
+
+export type UptimeStats = {
+  uptimePct: number | null
+  avgResponseMs: number | null
+}
+
+export type PlayPoint = {
+  date: string
+  installs?: number
+  uninstalls?: number
+  activeDevices?: number
+  rating?: number
+  crashRate?: number
+  anrRate?: number
+}
+
+export type PlayReview = {
+  id: string
+  author?: string
+  rating?: number
+  text?: string
+  version?: string
+  at?: string
+}
+
+export type PlayData = {
+  rating?: number
+  activeDevices?: number
+  totalInstalls?: number
+  installs30d?: number
+  uninstalls30d?: number
+  crashRate?: number
+  anrRate?: number
+  series?: PlayPoint[]
+  reviews?: PlayReview[]
+  errors?: { stats?: string; vitals?: string; reviews?: string }
+  syncedAt?: string
+}
+
+export type WebPoint = {
+  date: string
+  clicks?: number
+  impressions?: number
+  users?: number
+  sessions?: number
+  views?: number
+}
+
+export type TopRow = { key: string; value: number }
+
+export type SearchQuery = { key: string; clicks: number; impressions: number; position: number }
+
+export type WebData = {
+  searchSite?: string
+  analyticsProperty?: string
+  clicks30d?: number
+  impressions30d?: number
+  ctr?: number
+  position?: number
+  users30d?: number
+  sessions30d?: number
+  views30d?: number
+  engagementRate?: number
+  series?: WebPoint[]
+  queries?: SearchQuery[]
+  pages?: TopRow[]
+  sources?: TopRow[]
+  errors?: { search?: string; analytics?: string }
+  syncedAt?: string
+}
+
+export type RevenuePoint = { date: string; admob?: number; adsense?: number }
+
+export type ProjectRevenue = {
+  currency?: string
+  earnings30d?: number
+  prev30d?: number
+  admob30d?: number
+  adsense30d?: number
+  impressions30d?: number
+  ecpm?: number
+  admobApps?: string[]
+  adsenseDomain?: string
+  series?: RevenuePoint[]
+  syncedAt?: string
+}
+
+export type AdmobApp = {
+  appId: string
+  name: string
+  platform?: string
+  packageName?: string
+  linked?: boolean
+  approval?: string
+  projectId?: string
+}
+
+export type AdsenseSite = { domain: string; state?: string; projectId?: string }
+
+export type AccountRevenue = {
+  currency?: string
+  today?: number
+  yesterday?: number
+  thisMonth?: number
+  lastMonth?: number
+  earnings30d?: number
+  prev30d?: number
+  admob30d?: number
+  adsense30d?: number
+  series?: RevenuePoint[]
+  unassigned?: { source: 'admob' | 'adsense'; label: string; earnings30d: number }[]
+  admob?: {
+    publisherId?: string
+    impressions30d?: number
+    requests30d?: number
+    matchRate?: number
+    ecpm?: number
+    apps?: AdmobApp[]
+  }
+  adsense?: {
+    accountId?: string
+    pageViews30d?: number
+    clicks30d?: number
+    rpm?: number
+    balance?: string
+    sites?: AdsenseSite[]
+    alerts?: { severity?: string; message?: string }[]
+  }
+  errors?: { admob?: string; adsense?: string }
+  syncedAt?: string
+}
+
+export type GoogleIntegration = {
+  configured: boolean
+  connected: boolean
+  email?: string
+  connectedAt?: string
+  error?: string
+  revenue?: AccountRevenue
+}
+
+export type Project = {
+  _id: string
+  name: string
+  type: ProjectType
+  url?: string
+  storeUrl?: string
+  client?: string
+  stack: string[]
+  hosting?: string
+  repoUrl?: string
+  notes?: string
+  showOnSite: boolean
+  order: number
+  monitoringEnabled: boolean
+  lastCheck?: LastCheck
+  ssl?: SslInfo
+  domain?: DomainInfo
+  packageName?: string
+  play?: PlayData
+  web?: WebData
+  revenue?: ProjectRevenue
+  createdAt: string
+  updatedAt: string
+  stats24h?: UptimeStats & { sparkline: SparkPoint[] }
+}
+
+export type ProjectInput = {
+  name: string
+  type: ProjectType
+  url: string
+  storeUrl: string
+  client: string
+  stack: string[]
+  hosting: string
+  repoUrl: string
+  notes: string
+  showOnSite: boolean
+  monitoringEnabled: boolean
+  packageName: string
+}
+
+export type Check = {
+  up: boolean
+  statusCode?: number
+  responseTimeMs?: number
+  error?: string
+  checkedAt: string
+}
+
+export type Range = '24h' | '7d' | '30d'
+
+export type ProjectDetail = {
+  project: Project
+  range: Range
+  checks: Check[]
+  stats: Record<Range, UptimeStats>
+}
+
+export type AdminUser = {
+  id: string
+  name: string
+  email: string
+  role: string
+  profileImage?: string
+}

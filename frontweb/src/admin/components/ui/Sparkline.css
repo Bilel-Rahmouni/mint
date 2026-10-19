@@ -1,0 +1,23 @@
+.sparkline {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.sparkline--empty {
+  border-bottom: 1px dashed var(--color-faint);
+}
+
+.sparkline__line {
+  fill: none;
+  stroke: var(--color-mint);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.45));
+}
+
+.sparkline__down {
+  stroke: var(--color-danger);
+  stroke-width: 2;
+  opacity: 0.8;
+}

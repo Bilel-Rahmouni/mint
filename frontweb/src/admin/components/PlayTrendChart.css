@@ -1,0 +1,123 @@
+.play-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.play-chart--empty {
+  display: grid;
+  place-items: center;
+  height: 14rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-faint);
+  border-radius: var(--radius);
+}
+
+.play-chart__plot {
+  position: relative;
+  height: 14rem;
+}
+
+.play-chart__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.play-chart__baseline {
+  stroke: var(--color-line-strong);
+}
+
+.play-chart__up,
+.play-chart__down {
+  transition:
+    opacity 120ms var(--ease),
+    filter 120ms var(--ease);
+}
+
+.play-chart__up {
+  fill: var(--color-mint);
+  opacity: 0.7;
+}
+
+.play-chart__down {
+  fill: var(--color-danger);
+  opacity: 0.55;
+}
+
+.play-chart .is-hover .play-chart__up {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.6));
+}
+
+.play-chart .is-hover .play-chart__down {
+  opacity: 0.9;
+}
+
+.play-chart__tooltip {
+  position: absolute;
+  top: -0.5rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 8rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.68rem;
+  color: var(--color-muted-soft);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-tooltip);
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  animation: play-tooltip-in 140ms var(--ease);
+}
+
+.play-chart__tooltip strong {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-mint-strong);
+}
+
+.play-chart__tooltip-down {
+  color: var(--color-danger);
+}
+
+.play-chart__range {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.62rem;
+  color: var(--color-muted);
+}
+
+.play-chart__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.play-chart__swatch {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+}
+
+.play-chart__swatch--up {
+  background: var(--color-mint);
+}
+
+.play-chart__swatch--down {
+  margin-left: 0.5rem;
+  background: var(--color-danger);
+}
+
+@keyframes play-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% + 4px));
+  }
+}

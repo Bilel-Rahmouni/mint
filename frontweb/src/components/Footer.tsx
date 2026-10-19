@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Logo } from './Logo'
 import './Footer.css'
 
@@ -12,7 +13,12 @@ export function Footer() {
       >
         <Logo />
       </a>
-      <span>&copy; {new Date().getFullYear()}</span>
+      <span className="footer__meta">
+        <Link to="/privacy" className="footer__link">
+          Privacy
+        </Link>
+        <span>&copy; {new Date().getFullYear()}</span>
+      </span>
     </footer>
   )
 }

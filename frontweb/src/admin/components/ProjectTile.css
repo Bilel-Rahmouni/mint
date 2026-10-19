@@ -1,0 +1,175 @@
+.tile {
+  --accent: var(--color-mint);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.25rem 1.3rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-line);
+  background: var(--gradient-surface), var(--color-surface);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 260ms var(--ease),
+    box-shadow 260ms var(--ease),
+    border-color 260ms var(--ease);
+}
+
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(18rem 8rem at 100% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 260ms var(--ease);
+}
+
+.tile:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: var(--shadow-lift);
+}
+
+.tile:hover::after {
+  opacity: 1;
+}
+
+.tile--down {
+  --accent: var(--color-danger);
+  border-color: var(--color-danger-line);
+  background:
+    linear-gradient(180deg, var(--color-danger-soft), transparent 55%),
+    var(--color-surface);
+}
+
+.tile--warning {
+  --accent: var(--color-warn);
+}
+
+.tile--idle,
+.tile--pending {
+  --accent: var(--color-muted-soft);
+}
+
+.tile--idle .tile__chart {
+  opacity: 0.4;
+}
+
+.tile__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.tile__head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.tile__name {
+  flex: 1;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tile__host {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: -0.4rem;
+  font-size: 0.7rem;
+  color: var(--color-muted);
+}
+
+.tile__host > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tile__open {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: auto;
+  border-radius: 50%;
+  color: var(--color-muted-soft);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity var(--duration) var(--ease),
+    transform var(--duration) var(--ease),
+    color var(--duration) var(--ease),
+    background var(--duration) var(--ease);
+}
+
+.tile:hover .tile__open,
+.tile__open:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.tile__open:hover {
+  color: var(--color-mint-strong);
+  background: var(--color-mint-soft);
+}
+
+.tile__chart {
+  margin: 0 -0.2rem;
+}
+
+.tile__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.tile__metrics dt {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.tile__metrics dd {
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-strong);
+}
+
+.tile__metrics .is-warn dd {
+  color: var(--color-warn);
+}
+
+.tile__metrics .is-danger dd {
+  color: var(--color-danger);
+}
+
+.tile__foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.tile--down .tile__foot span:first-child {
+  color: var(--color-danger);
+}

@@ -1,0 +1,74 @@
+.google-connect {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1.5rem 1.75rem;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-mint-line);
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--color-mint-soft) 0%, transparent 55%),
+    radial-gradient(90% 120% at 100% 100%, var(--color-sky-soft) 0%, transparent 60%),
+    var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+
+.google-connect:hover {
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-1px);
+}
+
+.google-connect__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.google-connect__title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text-strong);
+}
+
+.google-connect__sources {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.google-connect__source {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+}
+
+.google-connect__source--admob {
+  color: var(--color-mint-strong);
+  border: 1px solid var(--color-mint-line);
+  background: var(--color-mint-soft);
+}
+
+.google-connect__source--adsense {
+  color: var(--color-sky);
+  border: 1px solid var(--color-sky-line);
+  background: var(--color-sky-soft);
+}
+
+.google-connect__error {
+  font-size: 0.8rem;
+  color: var(--color-warn);
+}
+
+@media (max-width: 640px) {
+  .google-connect {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

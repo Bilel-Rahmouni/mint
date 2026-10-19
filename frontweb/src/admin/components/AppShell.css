@@ -1,0 +1,16 @@
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+.shell__main {
+  min-width: 0;
+  padding: clamp(1.5rem, 3.5vw, 3rem) var(--page-gutter) 4rem;
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+}

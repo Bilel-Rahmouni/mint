@@ -1,0 +1,11 @@
+.disconnect-google__text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-muted-soft);
+}
+
+.disconnect-google__error {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+}

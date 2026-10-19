@@ -17,3 +17,17 @@
 .footer__brand:hover {
   opacity: 0.8;
 }
+
+.footer__meta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footer__link {
+  transition: color 0.15s ease;
+}
+
+.footer__link:hover {
+  color: var(--color-mint);
+}
