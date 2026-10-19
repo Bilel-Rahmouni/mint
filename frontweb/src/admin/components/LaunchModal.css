@@ -1,0 +1,63 @@
+.launch-modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+}
+
+.launch-modal__full {
+  grid-column: 1 / -1;
+}
+
+.launch-modal__channels {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0;
+  border: none;
+}
+
+.launch-modal__channels legend {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-soft);
+}
+
+.launch-modal__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.7rem;
+  font-size: 0.75rem;
+  color: var(--color-muted-soft);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line-strong);
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+}
+
+.launch-modal__chip:has(input:checked) {
+  color: var(--color-mint-strong);
+  border-color: var(--color-mint-line);
+  background: var(--color-mint-soft);
+}
+
+.launch-modal__chip input {
+  accent-color: var(--color-mint);
+}
+
+.launch-modal__error {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--color-danger);
+}
+
+@media (max-width: 640px) {
+  .launch-modal {
+    grid-template-columns: 1fr;
+  }
+}

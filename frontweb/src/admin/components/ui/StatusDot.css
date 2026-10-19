@@ -32,7 +32,9 @@
   box-shadow: 0 0 12px rgba(255, 107, 94, 0.8);
 }
 
-.status-dot--pending {
+.status-dot--pending,
+.status-dot--parked,
+.status-dot--idle {
   --dot: var(--color-muted-soft);
 }
 

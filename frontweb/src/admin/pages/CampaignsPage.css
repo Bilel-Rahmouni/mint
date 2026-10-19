@@ -1,0 +1,60 @@
+.campaigns__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.campaigns__table .panel__body {
+  padding: 0;
+  margin: -0.25rem -1.5rem -1.5rem;
+}
+
+.campaigns__name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.campaigns__name b {
+  font-weight: 500;
+  color: var(--color-text-strong);
+}
+
+.campaigns__name small,
+.campaigns__muted {
+  font-size: 0.75rem;
+  color: var(--color-muted-soft);
+}
+
+.campaigns__budget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 9rem;
+  font-size: 0.82rem;
+}
+
+.campaigns__budget small {
+  color: var(--color-muted-soft);
+}
+
+.campaigns__roas {
+  color: var(--color-mint-strong);
+}
+
+.campaigns__error {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-danger-line);
+  background: var(--color-danger-soft);
+}
+
+@media (max-width: 860px) {
+  .campaigns__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

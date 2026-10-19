@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import type { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react'
 import './Field.css'
 
 type BaseProps = {
@@ -12,6 +12,24 @@ export function Field({ label, hint, className = '', ...input }: BaseProps & Inp
     <label className={`field ${className}`}>
       <span className="field__label">{label}</span>
       <input className="field__control" {...input} />
+      {hint && <span className="field__hint">{hint}</span>}
+    </label>
+  )
+}
+
+export function SelectField({
+  label,
+  hint,
+  className = '',
+  children,
+  ...select
+}: BaseProps & SelectHTMLAttributes<HTMLSelectElement>) {
+  return (
+    <label className={`field ${className}`}>
+      <span className="field__label">{label}</span>
+      <select className="field__control field__control--select" {...select}>
+        {children}
+      </select>
       {hint && <span className="field__hint">{hint}</span>}
     </label>
   )

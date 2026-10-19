@@ -1,0 +1,16 @@
+.progress {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--bar);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--bar) 50%, transparent);
+  transition: width 0.4s var(--ease);
+}

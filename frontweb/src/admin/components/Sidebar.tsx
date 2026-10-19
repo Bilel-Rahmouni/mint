@@ -9,6 +9,10 @@ import './Sidebar.css'
 const NAV: { to: string; label: string; icon: IconName }[] = [
   { to: adminPath.overview, label: 'Overview', icon: 'grid' },
   { to: adminPath.portfolio, label: 'Portfolio', icon: 'layers' },
+  { to: adminPath.campaigns, label: 'Campaigns', icon: 'megaphone' },
+  { to: adminPath.content, label: 'Content', icon: 'calendar' },
+  { to: adminPath.rankings, label: 'Rankings', icon: 'trending' },
+  { to: adminPath.launches, label: 'Launches', icon: 'rocket' },
 ]
 
 export function Sidebar() {

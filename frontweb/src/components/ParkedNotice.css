@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap');
+
+.parked-notice {
+  --parked-display: 'Fraunces', 'Sora', serif;
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 100dvh;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(42rem 28rem at 88% -8%, rgba(74, 222, 128, 0.1), transparent 58%),
+    radial-gradient(24rem 18rem at 0% 100%, rgba(232, 192, 122, 0.06), transparent 62%),
+    var(--color-bg);
+}
+
+.parked-notice::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.parked-notice__mark {
+  position: relative;
+  margin-bottom: 0.85rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  animation: parked-in 700ms ease both;
+}
+
+.parked-notice__domain {
+  position: relative;
+  max-width: 18ch;
+  margin-bottom: clamp(2.5rem, 8vw, 4.5rem);
+  font-family: var(--parked-display);
+  font-size: clamp(3.4rem, 12vw, 8.5rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  color: #f3eee4;
+  animation: parked-in 700ms ease 80ms both;
+}
+
+.parked-notice__mail {
+  position: relative;
+  justify-self: start;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: clamp(0.82rem, 2vw, 0.95rem);
+  color: var(--color-text);
+  border-bottom: 1px solid rgba(74, 222, 128, 0.35);
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+  animation: parked-in 700ms ease 160ms both;
+}
+
+.parked-notice__mail:hover {
+  color: var(--color-mint);
+  border-color: var(--color-mint);
+}
+
+@keyframes parked-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

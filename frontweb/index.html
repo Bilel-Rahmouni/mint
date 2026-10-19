@@ -12,9 +12,45 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/src/admin/components/StatusBar.css" />
+    <link rel="stylesheet" href="/src/admin/components/StatusChips.css?v=tall" />
+    <link rel="stylesheet" href="/src/admin/components/StatusArea.css?v=3" />
+    <style>
+      section.summary {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        align-items: start !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      section.summary > .summary__bar {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-content: flex-start !important;
+        gap: 10px !important;
+        height: auto !important;
+        min-height: 16rem !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      section.summary > .summary__bar > .summary__segment {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 3.5rem !important;
+        min-height: 3.5rem !important;
+        min-width: 9.5rem !important;
+        max-width: none !important;
+        flex: 1 1 9.5rem !important;
+        padding: 0 0.9rem !important;
+        font-size: 0.78rem !important;
+        overflow: hidden !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/entry.tsx"></script>
   </body>
 </html>

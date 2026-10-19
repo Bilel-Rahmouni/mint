@@ -1,0 +1,96 @@
+.content-page__scroller {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.content-page__week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(10.5rem, 1fr));
+  gap: 0.65rem;
+  min-height: 32rem;
+}
+
+.content-page__day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 28rem;
+  padding: 0.9rem 0.65rem;
+  background: var(--gradient-surface), var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  animation: admin-reveal 0.5s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+.content-page__day.is-past {
+  opacity: 0.72;
+}
+
+.content-page__day.is-today {
+  border-color: var(--color-mint-line);
+  box-shadow: var(--shadow-lift);
+}
+
+.content-page__day-head {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0 0.2rem;
+}
+
+.content-page__day-head span {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-soft);
+}
+
+.content-page__day-head b {
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--color-text-strong);
+}
+
+.content-page__day.is-today .content-page__day-head b {
+  color: var(--color-mint-strong);
+}
+
+.content-page__add {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--color-muted-soft);
+  border-radius: 50%;
+  transition:
+    color var(--duration) var(--ease),
+    background var(--duration) var(--ease);
+}
+
+.content-page__add:hover {
+  color: var(--color-mint-strong);
+  background: var(--color-mint-soft);
+}
+
+.content-page__posts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content-page__error {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-danger-line);
+  background: var(--color-danger-soft);
+}

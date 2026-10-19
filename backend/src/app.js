@@ -6,7 +6,11 @@ import mongoose from 'mongoose'
 import { config } from './config.js'
 import { errorHandler, notFound } from './middleware/errorHandler.js'
 import authRoutes from './routes/auth.js'
+import campaignRoutes from './routes/campaigns.js'
+import contentRoutes from './routes/content.js'
 import integrationRoutes from './routes/integrations.js'
+import keywordRoutes from './routes/keywords.js'
+import launchRoutes from './routes/launches.js'
 import portfolioRoutes from './routes/portfolio.js'
 import projectRoutes from './routes/projects.js'
 
@@ -37,6 +41,10 @@ app.use('/api/auth', authRoutes)
 app.use('/api/integrations', integrationRoutes)
 app.use('/api/portfolio', portfolioRoutes)
 app.use('/api/projects', projectRoutes)
+app.use('/api/campaigns', campaignRoutes)
+app.use('/api/content', contentRoutes)
+app.use('/api/launches', launchRoutes)
+app.use('/api/keywords', keywordRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

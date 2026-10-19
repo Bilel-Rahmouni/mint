@@ -1,0 +1,21 @@
+.content-modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+}
+
+.content-modal__full {
+  grid-column: 1 / -1;
+}
+
+.content-modal__error {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--color-danger);
+}
+
+@media (max-width: 640px) {
+  .content-modal {
+    grid-template-columns: 1fr;
+  }
+}

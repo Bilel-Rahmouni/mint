@@ -1,0 +1,63 @@
+.launches__board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(15rem, 1fr));
+  gap: 0.85rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.launches__column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-height: 26rem;
+  padding: 1rem 0.75rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--stage-color) 10%, transparent), transparent 36%),
+    var(--color-surface);
+  border: 1px dashed var(--color-line-strong);
+  border-radius: var(--radius-lg);
+  animation: admin-reveal 0.5s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.launches__head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0 0.25rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-strong);
+}
+
+.launches__head small {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  color: var(--color-muted-soft);
+}
+
+.launches__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--stage-color);
+  box-shadow: 0 0 12px var(--stage-color);
+}
+
+.launches__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.launches__error {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-danger-line);
+  background: var(--color-danger-soft);
+}

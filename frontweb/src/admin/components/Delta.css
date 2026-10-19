@@ -1,0 +1,17 @@
+.delta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.delta--up {
+  color: var(--color-mint-strong);
+}
+
+.delta--down {
+  color: var(--color-danger);
+}
+
+.delta--flat {
+  color: var(--color-muted-soft);
+}

@@ -1,4 +1,5 @@
 import tls from 'node:tls'
+import { isUnusedUrl } from '../lib/unusedHosts.js'
 import { Check } from '../models/Check.js'
 import { Project } from '../models/Project.js'
 import { logger } from '../utils/logger.js'
@@ -97,7 +98,7 @@ async function checkDomain(hostname) {
 }
 
 export async function runUptimeCheck(project) {
-  if (!project.url) return null
+  if (!project.url || isUnusedUrl(project.url)) return null
   const result = await checkUptime(project.url)
   const checkedAt = new Date()
   await Check.create({ projectId: project._id, ...result, checkedAt })
@@ -107,6 +108,7 @@ export async function runUptimeCheck(project) {
 }
 
 export async function runCertificateChecks(project) {
+  if (isUnusedUrl(project.url)) return
   const hostname = project.url && hostnameOf(project.url)
   if (!hostname) return
   const [ssl, domain] = await Promise.all([checkSsl(hostname), checkDomain(hostname)])
@@ -122,7 +124,8 @@ export async function runFullCheck(project) {
 }
 
 async function forEachMonitored(label, fn) {
-  const projects = await Project.find({ monitoringEnabled: true, url: { $nin: [null, ''] } })
+  const projects = (await Project.find({ monitoringEnabled: true, url: { $nin: [null, ''] } }))
+    .filter((project) => !isUnusedUrl(project.url))
   const results = await Promise.allSettled(projects.map(fn))
   results.forEach((r, i) => {
     if (r.status === 'rejected') logger.error(`${label} failed for ${projects[i].name}:`, r.reason)

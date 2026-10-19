@@ -1,0 +1,9 @@
+.keyword-modal {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.keyword-modal__error {
+  font-size: 0.8rem;
+  color: var(--color-danger);
+}

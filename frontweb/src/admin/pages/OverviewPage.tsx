@@ -4,9 +4,12 @@ import { AlertStrip } from '../components/AlertStrip'
 import { IncomePanel } from '../components/IncomePanel'
 import { Loader } from '../components/Loader'
 import { PageHeader } from '../components/PageHeader'
+import { PlayOverview } from '../components/PlayOverview'
 import { ProjectFormModal } from '../components/ProjectFormModal'
 import { ProjectTile } from '../components/ProjectTile'
-import { StatusSummary } from '../components/StatusSummary'
+import { SearchPanel } from '../components/SearchPanel'
+import { StatusBar } from '../components/StatusBar'
+import { TrafficPanel } from '../components/TrafficPanel'
 import { Button } from '../components/ui/Button'
 import { Segmented } from '../components/ui/Segmented'
 import { useProjects } from '../hooks/useProjects'
@@ -52,14 +55,17 @@ export function OverviewPage() {
         <p className="overview__error">{error}</p>
       ) : (
         <>
-          <StatusSummary projects={projects} />
+          <StatusBar projects={projects} />
           <AlertStrip alerts={alerts} />
           <div className="overview__grid">
             {visible.map((project, i) => (
               <ProjectTile key={project._id} project={project} index={i} />
             ))}
           </div>
-          <IncomePanel projects={projects} onSynced={reload} index={6} />
+          <SearchPanel projects={projects} onSynced={reload} index={6} />
+          <TrafficPanel projects={projects} onSynced={reload} index={7} />
+          <PlayOverview projects={projects} onSynced={reload} index={8} />
+          <IncomePanel projects={projects} onSynced={reload} index={9} />
         </>
       )}
 

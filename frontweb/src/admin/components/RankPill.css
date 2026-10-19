@@ -1,0 +1,26 @@
+.rank-pill {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2rem;
+  height: 1.7rem;
+  padding: 0 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-text-strong);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rank-pill--mint {
+  color: var(--color-mint-strong);
+  border-color: var(--color-mint-line);
+  background: var(--color-mint-soft);
+}
+
+.rank-pill--gold {
+  color: #1a1204;
+  border-color: transparent;
+  background: linear-gradient(135deg, #f7d48b, #f0b429);
+}

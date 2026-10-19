@@ -1,7 +1,8 @@
+import { isUnusedProjectUrl } from '../../lib/parkedHosts'
 import { daysUntil } from './format'
 import type { Project } from './types'
 
-export type Status = 'up' | 'warning' | 'down' | 'pending' | 'idle'
+export type Status = 'up' | 'warning' | 'down' | 'pending' | 'idle' | 'parked'
 
 export const SSL_WARN_DAYS = 21
 export const DOMAIN_WARN_DAYS = 30
@@ -12,13 +13,15 @@ export const STATUS_LABEL: Record<Status, string> = {
   down: 'Down',
   pending: 'Pending',
   idle: 'Not monitored',
+  parked: 'No site yet',
 }
 
 export function isMonitored(project: Project) {
-  return Boolean(project.url) && project.monitoringEnabled
+  return Boolean(project.url) && project.monitoringEnabled && !isUnusedProjectUrl(project.url)
 }
 
 export function projectStatus(project: Project): Status {
+  if (isUnusedProjectUrl(project.url)) return 'parked' // domain only, no product site
   if (!isMonitored(project)) return 'idle'
   if (!project.lastCheck) return 'pending'
   if (!project.lastCheck.up) return 'down'

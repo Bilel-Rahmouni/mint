@@ -1,0 +1,37 @@
+.rankings__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.rankings__table .panel__body {
+  padding: 0;
+  margin: -0.25rem -1.5rem -1.5rem;
+}
+
+.rankings__keyword {
+  font-weight: 500;
+  color: var(--color-text-strong);
+}
+
+.rankings__muted {
+  font-size: 0.8rem;
+  color: var(--color-muted-soft);
+}
+
+.rankings__error {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-danger-line);
+  background: var(--color-danger-soft);
+}
+
+@media (max-width: 720px) {
+  .rankings__stats {
+    grid-template-columns: 1fr;
+  }
+}

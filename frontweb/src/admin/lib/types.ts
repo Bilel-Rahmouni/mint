@@ -230,3 +230,99 @@ export type AdminUser = {
   role: string
   profileImage?: string
 }
+
+export type AdChannel = 'meta' | 'google' | 'tiktok' | 'asa' | 'influencer' | 'email'
+export type CampaignObjective = 'Installs' | 'Signups' | 'Traffic' | 'Sales' | 'Awareness'
+export type CampaignStatus = 'Live' | 'Scheduled' | 'Paused' | 'Ended'
+export type Social = 'instagram' | 'tiktok' | 'linkedin' | 'x' | 'youtube' | 'blog'
+export type PostStatus = 'Draft' | 'Scheduled' | 'Published'
+export type LaunchStage = 'Idea' | 'Building' | 'Pre-launch' | 'Launched'
+export type AppStore = 'App Store' | 'Google Play'
+
+export type Campaign = {
+  _id: string
+  name: string
+  projectId: string
+  channel: AdChannel
+  objective: CampaignObjective
+  status: CampaignStatus
+  budget: number
+  spent: number
+  conversions: number
+  revenue: number
+  start: string
+  end: string
+}
+
+export type CampaignInput = {
+  name: string
+  projectId: string
+  channel: AdChannel
+  objective: CampaignObjective
+  status?: CampaignStatus
+  budget: number
+  spent?: number
+  conversions?: number
+  revenue?: number
+  start: string
+  end: string
+}
+
+export type ContentPost = {
+  _id: string
+  title: string
+  projectId: string
+  social: Social
+  status: PostStatus
+  date: string
+  time: string
+}
+
+export type ContentInput = {
+  title: string
+  projectId: string
+  social: Social
+  status?: PostStatus
+  date: string
+  time: string
+}
+
+export type Launch = {
+  _id: string
+  title: string
+  projectId: string
+  stage: LaunchStage
+  date: string
+  tasksDone: number
+  tasksTotal: number
+  channels: AdChannel[]
+}
+
+export type LaunchInput = {
+  title: string
+  projectId: string
+  stage?: LaunchStage
+  date: string
+  tasksDone?: number
+  tasksTotal?: number
+  channels?: AdChannel[]
+}
+
+export type AsoKeyword = {
+  _id: string
+  keyword: string
+  projectId: string
+  store: AppStore
+  rank: number
+  previousRank?: number
+  volume?: number
+  change: number
+}
+
+export type KeywordInput = {
+  keyword: string
+  projectId: string
+  store: AppStore
+  rank: number
+  volume?: number
+}

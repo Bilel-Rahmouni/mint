@@ -1,4 +1,19 @@
-import type { AdminUser, GoogleIntegration, Project, ProjectDetail, ProjectInput, Range } from './types'
+import type {
+  AdminUser,
+  AsoKeyword,
+  Campaign,
+  CampaignInput,
+  ContentInput,
+  ContentPost,
+  GoogleIntegration,
+  KeywordInput,
+  Launch,
+  LaunchInput,
+  Project,
+  ProjectDetail,
+  ProjectInput,
+  Range,
+} from './types'
 
 const BASE_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 const TOKEN_KEY = 'mint_admin_token'
@@ -85,6 +100,10 @@ export const api = {
   syncWeb: (id: string) =>
     request<{ project: Project }>(`/api/projects/${id}/web-sync`, { method: 'POST' }),
 
+  syncAllWeb: () => request<{ count: number }>('/api/projects/web-sync', { method: 'POST' }),
+
+  syncAllPlay: () => request<{ count: number }>('/api/projects/play-sync', { method: 'POST' }),
+
   reorderProjects: (ids: string[]) =>
     request<{ success: true }>('/api/projects/order', { method: 'PUT', body: { ids } }),
 
@@ -96,4 +115,38 @@ export const api = {
   syncRevenue: () => request<GoogleIntegration>('/api/integrations/google/sync', { method: 'POST' }),
 
   disconnectGoogle: () => request<GoogleIntegration>('/api/integrations/google', { method: 'DELETE' }),
+
+  listCampaigns: () => request<{ campaigns: Campaign[] }>('/api/campaigns'),
+  createCampaign: (input: CampaignInput) =>
+    request<{ campaign: Campaign }>('/api/campaigns', { method: 'POST', body: input }),
+  updateCampaign: (id: string, input: CampaignInput) =>
+    request<{ campaign: Campaign }>(`/api/campaigns/${id}`, { method: 'PUT', body: input }),
+  toggleCampaign: (id: string) =>
+    request<{ campaign: Campaign }>(`/api/campaigns/${id}/toggle`, { method: 'POST' }),
+  deleteCampaign: (id: string) =>
+    request<{ success: true }>(`/api/campaigns/${id}`, { method: 'DELETE' }),
+
+  listContent: () => request<{ posts: ContentPost[] }>('/api/content'),
+  createContent: (input: ContentInput) =>
+    request<{ post: ContentPost }>('/api/content', { method: 'POST', body: input }),
+  updateContent: (id: string, input: ContentInput) =>
+    request<{ post: ContentPost }>(`/api/content/${id}`, { method: 'PUT', body: input }),
+  deleteContent: (id: string) =>
+    request<{ success: true }>(`/api/content/${id}`, { method: 'DELETE' }),
+
+  listLaunches: () => request<{ launches: Launch[] }>('/api/launches'),
+  createLaunch: (input: LaunchInput) =>
+    request<{ launch: Launch }>('/api/launches', { method: 'POST', body: input }),
+  updateLaunch: (id: string, input: LaunchInput) =>
+    request<{ launch: Launch }>(`/api/launches/${id}`, { method: 'PUT', body: input }),
+  deleteLaunch: (id: string) =>
+    request<{ success: true }>(`/api/launches/${id}`, { method: 'DELETE' }),
+
+  listKeywords: () => request<{ keywords: AsoKeyword[] }>('/api/keywords'),
+  createKeyword: (input: KeywordInput) =>
+    request<{ keyword: AsoKeyword }>('/api/keywords', { method: 'POST', body: input }),
+  updateKeyword: (id: string, input: KeywordInput) =>
+    request<{ keyword: AsoKeyword }>(`/api/keywords/${id}`, { method: 'PUT', body: input }),
+  deleteKeyword: (id: string) =>
+    request<{ success: true }>(`/api/keywords/${id}`, { method: 'DELETE' }),
 }

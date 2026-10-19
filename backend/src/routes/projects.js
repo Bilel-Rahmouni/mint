@@ -3,12 +3,16 @@ import { body } from 'express-validator'
 import mongoose from 'mongoose'
 import { protect } from '../middleware/auth.js'
 import { rejectInvalid } from '../middleware/validate.js'
+import { Campaign } from '../models/Campaign.js'
 import { Check } from '../models/Check.js'
+import { ContentPost } from '../models/ContentPost.js'
+import { Keyword } from '../models/Keyword.js'
+import { Launch } from '../models/Launch.js'
 import { Project } from '../models/Project.js'
 import { googleEnabled } from '../config.js'
 import { runFullCheck } from '../services/monitor.js'
-import { runPlaySync } from '../services/play.js'
-import { runWebSync } from '../services/web.js'
+import { runAllPlaySyncs, runPlaySync } from '../services/play.js'
+import { runAllWebSyncs, runWebSync } from '../services/web.js'
 import { logger } from '../utils/logger.js'
 
 const router = Router()
@@ -94,7 +98,7 @@ async function uptimeStatsSince(since, projectIds) {
 router.get('/', async (req, res) => {
   const projects = await Project.find()
     .sort({ order: 1, createdAt: 1 })
-    .select('-play.series -play.reviews -web.series -web.queries -web.pages -web.sources -revenue.series')
+    .select('-play.reviews -revenue.series')
     .lean()
   const stats = await uptimeStatsSince(new Date(Date.now() - DAY_MS))
 
@@ -121,6 +125,20 @@ router.post('/', projectValidators(true), rejectInvalid, async (req, res) => {
   if (project.packageName) syncPlayInBackground(project)
 
   res.status(201).json({ project })
+})
+
+// POST /api/projects/web-sync — pull Search Console + Analytics for every site
+router.post('/web-sync', async (req, res) => {
+  if (!googleEnabled) return res.status(503).json({ message: 'Google is not configured on the server' })
+  const count = await runAllWebSyncs()
+  res.json({ count })
+})
+
+// POST /api/projects/play-sync — pull Play stats for every app
+router.post('/play-sync', async (req, res) => {
+  if (!googleEnabled) return res.status(503).json({ message: 'Google is not configured on the server' })
+  const count = await runAllPlaySyncs()
+  res.json({ count })
 })
 
 // PUT /api/projects/order — persist portfolio order from an ordered list of ids
@@ -197,7 +215,13 @@ router.put('/:id', projectValidators(false), rejectInvalid, async (req, res) => 
 router.delete('/:id', async (req, res) => {
   const project = await Project.findByIdAndDelete(req.params.id)
   if (!project) return res.status(404).json({ message: 'Project not found' })
-  await Check.deleteMany({ projectId: project._id })
+  await Promise.all([
+    Check.deleteMany({ projectId: project._id }),
+    Campaign.deleteMany({ projectId: project._id }),
+    ContentPost.deleteMany({ projectId: project._id }),
+    Launch.deleteMany({ projectId: project._id }),
+    Keyword.deleteMany({ projectId: project._id }),
+  ])
   res.json({ success: true })
 })
 

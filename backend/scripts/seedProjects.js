@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { config } from '../src/config.js'
+import { isUnusedUrl } from '../src/lib/unusedHosts.js'
 import { Project } from '../src/models/Project.js'
 
 const storeUrl = (packageName) => `https://play.google.com/store/apps/details?id=${packageName}`
@@ -12,7 +13,7 @@ const projects = [
   { name: 'dozone', type: 'website', url: 'https://dozone.site', ...play('com.indigenoustech.dozone') },
   { name: 'onecrew.pro', type: 'website', url: 'https://onecrew.pro' },
   { name: 'onecrew.me', type: 'website', url: 'https://onecrew.me' },
-  { name: 'takwira', type: 'app', storeUrl: storeUrl('tn.rebounddev.takwira_flutter') },
+  { name: 'takwira', type: 'app', url: 'https://takwira.site', storeUrl: storeUrl('tn.rebounddev.takwira_flutter') },
   { name: 'koultounsi.com', type: 'website', url: 'https://koultounsi.com' },
   { name: 'tounsy.com', type: 'website', url: 'https://tounsy.com' },
   {
@@ -22,12 +23,10 @@ const projects = [
     ...play('com.indigenoustech.ultimatecalculators'),
   },
   { name: 'brain gym', type: 'website', url: 'https://brain-gym.site' },
-  { name: 'lingomate', type: 'app', ...play('com.indigenoustech.lingora') },
+  { name: 'lingomate', type: 'app', url: 'https://lingomate.site', ...play('com.indigenoustech.lingora') },
   { name: 'frontend prep', type: 'app', url: 'https://frontendprep.site', ...play('com.indigenoustech.frontendprep') },
-  { name: 'renklar.dk', type: 'website', url: 'https://renklar.dk' },
-  { name: 'renklar', type: 'app', ...play('com.indigenoustech.renklar') },
-  { name: 'dont', type: 'app', ...play('com.indigenoustech.dont') },
-  { name: 'renklar (legacy)', type: 'app', showOnSite: false, ...play('com.renklar.app') },
+  { name: 'renklar', type: 'website', url: 'https://renklar.dk', ...play('com.indigenoustech.renklar') },
+  { name: 'dont', type: 'app', url: 'https://dontapp.site', ...play('com.indigenoustech.dont') },
   { name: 'mint studio', type: 'website', url: 'https://mintstudio.io', showOnSite: false },
 ]
 
@@ -40,12 +39,18 @@ const RENAMED_URLS = {
   'https://braingym.tn': 'https://brain-gym.site',
   'https://ultimatecalculator.app': 'https://ultimatecalculator.site',
   'https://dozone.io': 'https://dozone.site',
+  'https://lingora.site': 'https://lingomate.site',
 }
 
-// Urls that now belong to their own project, removed from the project that held them before
-const MOVED_URLS = {
-  renklar: 'https://renklar.dk',
+// Duplicate rows folded into the real project (name → keep)
+const MERGE_INTO = {
+  'renklar.dk': 'renklar',
 }
+
+const REMOVE = [
+  { name: 'renklar (legacy)' },
+  { packageName: 'com.renklar.app' },
+]
 
 await mongoose.connect(config.mongoUri)
 
@@ -58,24 +63,52 @@ for (const seed of projects) {
   const existing = await Project.findOne({ name: seed.name })
 
   if (!existing) {
-    await Project.create({ showOnSite: true, ...seed, order: nextOrder++ })
+    await Project.create({
+      showOnSite: true,
+      monitoringEnabled: !isUnusedUrl(seed.url),
+      ...seed,
+      order: nextOrder++,
+    })
     created += 1
     continue
   }
 
   const missing = FILL_IF_EMPTY.filter((key) => seed[key] && !existing[key])
   const renamed = RENAMED_URLS[existing.url]
-  const moved = existing.url && MOVED_URLS[existing.name] === existing.url
-  if (missing.length || renamed || moved) {
+  const typeChanged = seed.type && existing.type !== seed.type
+  const unused = isUnusedUrl(existing.url || seed.url)
+  const monitor = !unused
+  const monitorChanged = existing.monitoringEnabled !== monitor
+  if (missing.length || renamed || typeChanged || monitorChanged) {
     for (const key of missing) existing[key] = seed[key]
-    if (renamed || moved) {
-      existing.url = moved ? undefined : renamed
-      existing.web = undefined
-    }
+    if (renamed) existing.url = renamed
+    if (typeChanged) existing.type = seed.type
+    if (monitorChanged) existing.monitoringEnabled = monitor
     await existing.save()
     updated += 1
   }
 }
 
-console.log(`Seed: ${created} created, ${updated} updated, ${projects.length - created - updated} unchanged`)
+let merged = 0
+for (const [fromName, intoName] of Object.entries(MERGE_INTO)) {
+  const from = await Project.findOne({ name: fromName })
+  const into = await Project.findOne({ name: intoName })
+  if (!from || !into) continue
+  if (!into.url && from.url) into.url = from.url
+  if (!into.web?.analyticsProperty && from.web) into.web = from.web
+  if (!into.lastCheck?.checkedAt && from.lastCheck) into.lastCheck = from.lastCheck
+  if (!into.ssl?.checkedAt && from.ssl) into.ssl = from.ssl
+  if (!into.domain?.checkedAt && from.domain) into.domain = from.domain
+  await into.save()
+  await from.deleteOne()
+  merged += 1
+}
+
+let removed = 0
+for (const query of REMOVE) {
+  const result = await Project.deleteMany(query)
+  removed += result.deletedCount
+}
+
+console.log(`Seed: ${created} created, ${updated} updated, ${merged} merged, ${removed} removed, ${projects.length - created - updated} unchanged`)
 await mongoose.disconnect()

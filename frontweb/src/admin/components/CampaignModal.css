@@ -1,0 +1,28 @@
+.campaign-modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+}
+
+.campaign-modal__full {
+  grid-column: 1 / -1;
+}
+
+.campaign-modal__summary {
+  margin-right: auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-muted-soft);
+}
+
+.campaign-modal__error {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--color-danger);
+}
+
+@media (max-width: 640px) {
+  .campaign-modal {
+    grid-template-columns: 1fr;
+  }
+}

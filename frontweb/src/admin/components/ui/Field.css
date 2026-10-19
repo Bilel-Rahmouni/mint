@@ -43,6 +43,19 @@
   box-shadow: 0 0 0 4px var(--color-mint-soft);
 }
 
+.field__control--select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%238b928d' d='M1 1l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.2rem;
+}
+
+.field__control--select option {
+  background: #111312;
+  color: #f6f8f7;
+}
+
 .field__control--area {
   height: auto;
   min-height: 6.5rem;

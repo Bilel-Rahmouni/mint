@@ -1,0 +1,12 @@
+.channel-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 1.45rem;
+  padding: 0 0.55rem;
+  font-size: 0.7rem;
+  color: var(--chip);
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in srgb, var(--chip) 35%, transparent);
+  background: color-mix(in srgb, var(--chip) 12%, transparent);
+}

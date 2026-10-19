@@ -1,4 +1,5 @@
 import { googleEnabled } from '../config.js'
+import { isUnusedUrl } from '../lib/unusedHosts.js'
 import { Project } from '../models/Project.js'
 import { logger } from '../utils/logger.js'
 import { googleFetch } from './googleAuth.js'
@@ -14,8 +15,10 @@ const TOP_ROWS = 10
 const TOP_SOURCES = 6
 
 const bareHost = (value) => {
+  if (!value) return ''
   try {
-    return new URL(value).hostname.toLowerCase().replace(/^www\./, '')
+    const url = value.includes('://') ? value : `https://${value}`
+    return new URL(url).hostname.toLowerCase().replace(/^www\./, '')
   } catch {
     return ''
   }
@@ -166,11 +169,22 @@ export async function runWebSync(project, links) {
   if (!googleEnabled || !project.url) return project
 
   const host = bareHost(project.url)
+  const unused = isUnusedUrl(project.url)
   const { sites, properties } = links ?? (await discoverLinks())
 
   const [search, analytics] = await Promise.allSettled([
-    (async () => fetchSearch(resolveLink(sites, host, `${host} is not shared in Search Console`)))(),
-    (async () => fetchAnalytics(resolveLink(properties, host, `${host} is not shared in Analytics`)))(),
+    (async () => {
+      const site = unused
+        ? (sites instanceof Map ? sites.get(host) : undefined)
+        : resolveLink(sites, host, `${host} is not shared in Search Console`)
+      return site ? fetchSearch(site) : null
+    })(),
+    (async () => {
+      const property = unused
+        ? (properties instanceof Map ? properties.get(host) : undefined)
+        : resolveLink(properties, host, `${host} is not shared in Analytics`)
+      return property ? fetchAnalytics(property) : null
+    })(),
   ])
 
   const previous = project.web?.toObject?.() ?? project.web ?? {}
@@ -181,7 +195,7 @@ export async function runWebSync(project, links) {
     return seriesByDate.get(date)
   }
 
-  if (search.status === 'fulfilled') {
+  if (search.status === 'fulfilled' && search.value) {
     const { site, summary, series, queries } = search.value
     Object.assign(web, summary, { searchSite: site, queries })
     for (const d of series) Object.assign(point(d.date), { clicks: d.clicks, impressions: d.impressions })
@@ -189,7 +203,7 @@ export async function runWebSync(project, links) {
     web.errors.search = errorMessage(search)
   }
 
-  if (analytics.status === 'fulfilled') {
+  if (analytics.status === 'fulfilled' && analytics.value) {
     const { property, summary, series, pages, sources } = analytics.value
     Object.assign(web, summary, { analyticsProperty: property, pages, sources })
     for (const d of series) Object.assign(point(d.date), { users: d.users, sessions: d.sessions, views: d.views })

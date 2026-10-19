@@ -50,11 +50,13 @@
 }
 
 .tile--idle,
+.tile--parked,
 .tile--pending {
   --accent: var(--color-muted-soft);
 }
 
-.tile--idle .tile__chart {
+.tile--idle .tile__chart,
+.tile--parked .tile__chart {
   opacity: 0.4;
 }
 

@@ -1,0 +1,31 @@
+section.summary {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: start !important;
+  gap: 1.15rem !important;
+  overflow: visible !important;
+}
+
+section.summary > .summary__bar {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-content: flex-start !important;
+  gap: 10px !important;
+  height: auto !important;
+  min-height: 16rem !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+section.summary > .summary__bar > .summary__segment {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 3.5rem !important;
+  min-height: 3.5rem !important;
+  min-width: 9.5rem !important;
+  max-width: none !important;
+  flex: 1 1 9.5rem !important;
+  padding: 0 0.9rem !important;
+  font-size: 0.78rem !important;
+}
