@@ -21,11 +21,13 @@
   font-weight: 600;
   line-height: 0.8;
   letter-spacing: -0.08em;
+  font-family: var(--font-display);
+  font-style: italic;
   color: transparent;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.01));
+  background: linear-gradient(180deg, rgba(182, 245, 208, 0.72), rgba(74, 222, 128, 0.08));
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
   user-select: none;
 }
 
@@ -38,8 +40,8 @@
   border-radius: 50%;
   background: var(--gradient-mint);
   box-shadow:
-    0 0 40px rgba(74, 222, 128, 0.8),
-    0 0 140px 30px rgba(74, 222, 128, 0.25);
+    0 0 40px rgba(74, 222, 128, 0.45),
+    0 0 140px 30px rgba(74, 222, 128, 0.12);
   animation: orb-breathe 4s var(--ease) infinite;
 }
 
@@ -52,7 +54,7 @@
   padding: 2.2rem 2rem 2rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-line-strong);
-  background: var(--gradient-surface), rgba(14, 16, 15, 0.82);
+  background: var(--gradient-surface), rgba(12, 12, 12, 0.86);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow-modal);
 }

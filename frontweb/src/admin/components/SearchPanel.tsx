@@ -26,6 +26,7 @@ export function SearchPanel({ projects, onSynced, index = 0 }: Props) {
   return (
     <IntegrationSection
       title="Search"
+      kind="web"
       meta={`${search.sites} sites`}
       syncedAt={search.syncedAt}
       index={index}

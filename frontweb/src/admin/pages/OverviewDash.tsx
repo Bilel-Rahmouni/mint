@@ -21,10 +21,10 @@ import './OverviewPage.css'
 
 type Filter = 'all' | ProjectType
 
-const FILTERS: { value: Filter; label: string }[] = [
+const FILTERS: { value: Filter; label: string; kind?: 'web' | 'app' }[] = [
   { value: 'all', label: 'All' },
-  { value: 'website', label: 'Websites' },
-  { value: 'app', label: 'Apps' },
+  { value: 'website', label: 'Websites', kind: 'web' as const },
+  { value: 'app', label: 'Apps', kind: 'app' as const },
 ]
 
 export function OverviewPage() {

@@ -3,3 +3,6 @@ node_modules
 *.log
 google-service-account.json
 google-service-account.json~
+data/career-run.json
+data/career-jobs.json
+data/career-connects.json

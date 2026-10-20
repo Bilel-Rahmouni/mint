@@ -16,10 +16,11 @@ type Props = {
   onSync: () => Promise<unknown>
   onSynced: () => void
   actions?: ReactNode
+  kind?: 'web' | 'app'
   children: ReactNode
 }
 
-export function IntegrationSection({ title, meta, syncedAt, errors, index = 0, onSync, onSynced, actions, children }: Props) {
+export function IntegrationSection({ title, meta, syncedAt, errors, index = 0, onSync, onSynced, actions, kind, children }: Props) {
   const [syncing, setSyncing] = useState(false)
   const [syncError, setSyncError] = useState<string | null>(null)
 
@@ -39,7 +40,7 @@ export function IntegrationSection({ title, meta, syncedAt, errors, index = 0, o
   const visibleErrors = errors.filter((e) => e.message)
 
   return (
-    <section className="integration">
+    <section className={`integration${kind ? ` integration--${kind}` : ''}`}>
       <header className="integration__head reveal" style={stagger(index)}>
         <div className="integration__heading">
           <h2 className="integration__title">{title}</h2>

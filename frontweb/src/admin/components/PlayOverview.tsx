@@ -24,6 +24,7 @@ export function PlayOverview({ projects, onSynced, index = 0 }: Props) {
   return (
     <IntegrationSection
       title="Play"
+      kind="app"
       meta={`${play.apps} apps`}
       syncedAt={play.syncedAt}
       index={index}

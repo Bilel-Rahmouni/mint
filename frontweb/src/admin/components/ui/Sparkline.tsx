@@ -5,11 +5,12 @@ import './Sparkline.css'
 type Props = {
   points: SparkPoint[]
   height?: number
+  kind?: 'web' | 'app'
 }
 
 const WIDTH = 200
 
-export function Sparkline({ points, height = 44 }: Props) {
+export function Sparkline({ points, height = 44, kind = 'web' }: Props) {
   const gradientId = `spark-${useId().replace(/[^a-zA-Z0-9]/g, '')}`
   const values = points.map((p) => p.t ?? 0)
 
@@ -33,11 +34,11 @@ export function Sparkline({ points, height = 44 }: Props) {
   const area = `${line} L${WIDTH},${height} L0,${height} Z`
 
   return (
-    <svg className="sparkline" viewBox={`0 0 ${WIDTH} ${height}`} preserveAspectRatio="none" style={{ height }}>
+    <svg className={`sparkline sparkline--${kind}`} viewBox={`0 0 ${WIDTH} ${height}`} preserveAspectRatio="none" style={{ height }}>
       <defs>
         <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="var(--color-mint)" stopOpacity="0.28" />
-          <stop offset="100%" stopColor="var(--color-mint)" stopOpacity="0" />
+          <stop offset="0%" stopColor={kind === 'app' ? 'var(--kind-app)' : 'var(--kind-web)'} stopOpacity="0.28" />
+          <stop offset="100%" stopColor={kind === 'app' ? 'var(--kind-app)' : 'var(--kind-web)'} stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={area} fill={`url(#${gradientId})`} />

@@ -40,21 +40,21 @@
 }
 
 .project-page__status--up {
-  color: var(--color-mint-strong);
-  border-color: var(--color-mint-line);
-  background: var(--color-mint-soft);
+  color: var(--status-up-strong);
+  border-color: var(--status-up-line);
+  background: var(--status-up-soft);
 }
 
 .project-page__status--warning {
-  color: var(--color-warn);
-  border-color: var(--color-warn-line);
-  background: var(--color-warn-soft);
+  color: var(--status-warn);
+  border-color: var(--status-warn-line);
+  background: var(--status-warn-soft);
 }
 
 .project-page__status--down {
-  color: var(--color-danger);
-  border-color: var(--color-danger-line);
-  background: var(--color-danger-soft);
+  color: var(--status-down);
+  border-color: var(--status-down-line);
+  background: var(--status-down-soft);
 }
 
 .project-page__link {

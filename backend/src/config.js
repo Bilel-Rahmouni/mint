@@ -1,5 +1,7 @@
 import 'dotenv/config'
 import { existsSync, readFileSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const missing = ['MONGODB_URI', 'JWT_SECRET'].filter((key) => !process.env[key])
 if (missing.length) {
@@ -20,6 +22,7 @@ function readGoogleKeyFile() {
 
 const googleKey = readGoogleKeyFile()
 const port = Number(process.env.PORT) || 4600
+const srcDir = path.dirname(fileURLToPath(import.meta.url))
 
 export const config = {
   env: process.env.NODE_ENV || 'development',
@@ -56,6 +59,8 @@ export const config = {
     from: process.env.ALERT_FROM || '',
   },
   publoraApiKey: process.env.PUBLORA_API_KEY || '',
+  careerOpsDir: process.env.CAREER_OPS_DIR || path.resolve(srcDir, '../../../career-ops-main'),
+  cursorApiKey: process.env.CURSOR_API_KEY || '',
 }
 
 export const googleEnabled = Boolean(config.google.clientEmail && config.google.privateKey)

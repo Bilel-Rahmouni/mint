@@ -15,7 +15,7 @@ const fallbackProjects: PortfolioProject[] = [
   { name: 'koultounsi.com', href: 'https://koultounsi.com' },
   { name: 'tounsy.com', href: 'https://tounsy.com' },
   { name: 'ultimate calculator', href: 'https://ultimatecalculator.site' },
-  { name: 'brain gym', href: 'https://brain-gym.site' },
+  { name: 'bilelrahmouni.com', href: 'https://bilelrahmouni.com' },
 ]
 
 export function Work() {

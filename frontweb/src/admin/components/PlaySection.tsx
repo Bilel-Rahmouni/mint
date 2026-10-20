@@ -20,6 +20,7 @@ export function PlaySection({ project, onSynced, index = 0 }: Props) {
   return (
     <IntegrationSection
       title="Google Play"
+      kind="app"
       meta={project.packageName}
       syncedAt={play.syncedAt}
       index={index}

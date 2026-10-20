@@ -1,5 +1,5 @@
 .tile {
-  --accent: var(--color-mint);
+  --accent: var(--status-up);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -38,15 +38,15 @@
 }
 
 .tile--down {
-  --accent: var(--color-danger);
-  border-color: var(--color-danger-line);
+  --accent: var(--status-down);
+  border-color: var(--status-down-line);
   background:
-    linear-gradient(180deg, var(--color-danger-soft), transparent 55%),
+    linear-gradient(180deg, var(--status-down-soft), transparent 55%),
     var(--color-surface);
 }
 
 .tile--warning {
-  --accent: var(--color-warn);
+  --accent: var(--status-warn);
 }
 
 .tile--idle,
@@ -76,13 +76,22 @@
 .tile__name {
   flex: 1;
   min-width: 0;
-  font-size: 1rem;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
   letter-spacing: -0.01em;
   color: var(--color-text-strong);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.tile--web .tile__host svg {
+  color: var(--kind-web);
+}
+
+.tile--app .tile__host svg {
+  color: var(--kind-app);
 }
 
 .tile__host {
@@ -157,11 +166,11 @@
 }
 
 .tile__metrics .is-warn dd {
-  color: var(--color-warn);
+  color: var(--status-warn);
 }
 
 .tile__metrics .is-danger dd {
-  color: var(--color-danger);
+  color: var(--status-down);
 }
 
 .tile__foot {
@@ -173,5 +182,5 @@
 }
 
 .tile--down .tile__foot span:first-child {
-  color: var(--color-danger);
+  color: var(--status-down);
 }

@@ -1,0 +1,46 @@
+.career-job {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.career-job--compact {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.career-job__role {
+  color: var(--color-text-strong);
+  font-weight: 500;
+}
+
+.career-job--compact .career-job__role {
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+.career-job__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.career-job__reason {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.career-job__link {
+  font-size: 0.8rem;
+  color: var(--color-mint);
+  text-decoration: none;
+}
+
+.career-job__link:hover {
+  color: var(--color-mint-strong);
+}

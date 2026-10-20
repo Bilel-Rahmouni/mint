@@ -7,9 +7,9 @@
 }
 
 .alerts__item {
-  --tone: var(--color-warn);
-  --tone-soft: var(--color-warn-soft);
-  --tone-line: var(--color-warn-line);
+  --tone: var(--status-warn);
+  --tone-soft: var(--status-warn-soft);
+  --tone-line: var(--status-warn-line);
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
@@ -33,9 +33,9 @@
 }
 
 .alerts__item--danger {
-  --tone: var(--color-danger);
-  --tone-soft: var(--color-danger-soft);
-  --tone-line: var(--color-danger-line);
+  --tone: var(--status-down);
+  --tone-soft: var(--status-down-soft);
+  --tone-line: var(--status-down-line);
 }
 
 .alerts__item:hover {

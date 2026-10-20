@@ -5,11 +5,11 @@
 }
 
 .delta--up {
-  color: var(--color-mint-strong);
+  color: var(--status-up-strong);
 }
 
 .delta--down {
-  color: var(--color-danger);
+  color: var(--status-down);
 }
 
 .delta--flat {

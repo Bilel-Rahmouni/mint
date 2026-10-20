@@ -23,6 +23,7 @@ export function WebSection({ project, onSynced, index = 0 }: Props) {
   return (
     <IntegrationSection
       title="Search & traffic"
+      kind="web"
       meta={hostOf(project.url)}
       syncedAt={web.syncedAt}
       index={index}

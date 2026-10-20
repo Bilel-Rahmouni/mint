@@ -34,14 +34,14 @@
 }
 
 .incidents__item.is-ongoing::before {
-  background: var(--color-danger);
-  box-shadow: 0 0 10px var(--color-danger);
+  background: var(--status-down);
+  box-shadow: 0 0 10px var(--status-down);
 }
 
 .incidents__reason {
   grid-area: reason;
   font-size: 0.75rem;
-  color: var(--color-danger);
+  color: var(--status-down);
 }
 
 .incidents__time {
@@ -57,11 +57,11 @@
 }
 
 .is-ongoing .incidents__duration {
-  color: var(--color-danger);
+  color: var(--status-down);
 }
 
 .incidents__clear {
   padding: 1.5rem 0;
   font-size: 0.75rem;
-  color: var(--color-mint);
+  color: var(--status-up);
 }

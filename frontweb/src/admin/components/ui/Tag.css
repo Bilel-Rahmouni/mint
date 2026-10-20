@@ -32,3 +32,15 @@
   border-color: var(--color-danger-line);
   background: var(--color-danger-soft);
 }
+
+.tag--web {
+  color: var(--kind-web);
+  border-color: var(--kind-web-line);
+  background: var(--kind-web-soft);
+}
+
+.tag--app {
+  color: var(--kind-app);
+  border-color: var(--kind-app-line);
+  background: var(--kind-app-soft);
+}

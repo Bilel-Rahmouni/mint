@@ -38,17 +38,17 @@
 
 .summary > .summary__bar > .summary__segment--up {
   color: #07140c;
-  background: linear-gradient(180deg, var(--color-mint-strong), var(--color-mint-deep));
+  background: linear-gradient(180deg, var(--status-up-strong), var(--status-up-deep));
 }
 
 .summary > .summary__bar > .summary__segment--warning {
   color: #2a1c08;
-  background: linear-gradient(180deg, #ffd38a, var(--color-warn));
+  background: linear-gradient(180deg, #ffd38a, var(--status-warn));
 }
 
 .summary > .summary__bar > .summary__segment--down {
   color: #2a0c0a;
-  background: linear-gradient(180deg, #ff9b91, var(--color-danger));
+  background: linear-gradient(180deg, #ff9b91, var(--status-down));
   box-shadow: 0 0 16px rgba(255, 107, 94, 0.6);
 }
 

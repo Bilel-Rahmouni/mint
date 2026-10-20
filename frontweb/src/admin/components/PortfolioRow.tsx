@@ -34,7 +34,7 @@ export function PortfolioRow({ project, position, isFirst, isLast, onMove, onTog
         <span className="portfolio-row__host mono">{hostOf(href) || '—'}</span>
       </div>
 
-      <Tag>{project.type === 'app' ? 'app' : 'web'}</Tag>
+      <Tag tone={project.type === 'app' ? 'app' : 'web'}>{project.type === 'app' ? 'app' : 'web'}</Tag>
 
       <Toggle
         checked={project.showOnSite}

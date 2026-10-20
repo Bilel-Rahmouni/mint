@@ -54,15 +54,15 @@
 }
 
 .revenue-chart__bar--admob {
-  background: var(--gradient-mint);
+  background: var(--kind-app);
 }
 
 .revenue-chart__bar--adsense {
-  background: linear-gradient(180deg, var(--color-sky) 0%, var(--color-sky-line) 100%);
+  background: var(--kind-web);
 }
 
 .revenue-chart__col--active .revenue-chart__bar {
-  filter: brightness(1.25) drop-shadow(0 0 6px var(--color-mint-line));
+  filter: brightness(1.15) drop-shadow(0 0 6px var(--kind-web-line));
 }
 
 .revenue-chart__tooltip {
@@ -109,13 +109,13 @@
 }
 
 .revenue-chart__swatch--admob {
-  background: var(--gradient-mint);
-  box-shadow: var(--shadow-glow);
+  background: var(--kind-app);
+  box-shadow: 0 0 10px -2px var(--kind-app-line);
 }
 
 .revenue-chart__swatch--adsense {
-  background: var(--color-sky);
-  box-shadow: 0 0 10px -2px var(--color-sky-line);
+  background: var(--kind-web);
+  box-shadow: 0 0 10px -2px var(--kind-web-line);
 }
 
 .revenue-chart__foot {

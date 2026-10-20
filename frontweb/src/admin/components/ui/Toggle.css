@@ -48,13 +48,13 @@
 .toggle__input:checked + .toggle__track {
   background: var(--color-mint-soft);
   border-color: var(--color-mint-line);
-  box-shadow: inset 0 0 12px rgba(74, 222, 128, 0.15);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.12);
 }
 
 .toggle__input:checked + .toggle__track .toggle__thumb {
   background: var(--color-mint);
   transform: translate(1.05rem, -50%);
-  box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 .toggle__input:focus-visible + .toggle__track {

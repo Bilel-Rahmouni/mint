@@ -15,9 +15,9 @@ type Props = {
   onSaved: (project: Project) => void
 }
 
-const TYPE_OPTIONS: { value: ProjectType; label: string }[] = [
-  { value: 'website', label: 'Website' },
-  { value: 'app', label: 'App' },
+const TYPE_OPTIONS: { value: ProjectType; label: string; kind: 'web' | 'app' }[] = [
+  { value: 'website', label: 'Website', kind: 'web' },
+  { value: 'app', label: 'App', kind: 'app' },
 ]
 
 function toInput(project?: Project): ProjectInput {

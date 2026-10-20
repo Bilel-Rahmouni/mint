@@ -39,7 +39,7 @@
 
 .field__control:focus {
   border-color: var(--color-mint-line);
-  background: #080a09;
+  background: #080808;
   box-shadow: 0 0 0 4px var(--color-mint-soft);
 }
 
@@ -52,8 +52,8 @@
 }
 
 .field__control--select option {
-  background: #111312;
-  color: #f6f8f7;
+  background: #111111;
+  color: #f5f5f5;
 }
 
 .field__control--area {

@@ -115,8 +115,8 @@ export function RankingsPage() {
               ariaLabel="Source"
               value={source}
               options={[
-                { value: 'seo', label: 'Google' },
-                { value: 'aso', label: 'App stores' },
+                { value: 'seo', label: 'Google', kind: 'web' },
+                { value: 'aso', label: 'App stores', kind: 'app' },
               ]}
               onChange={setSource}
             />

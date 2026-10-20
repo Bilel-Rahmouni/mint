@@ -1,0 +1,59 @@
+.career-connects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.career-connects__error {
+  margin: 0 0 0.75rem;
+  font-size: 0.84rem;
+  color: var(--color-danger);
+}
+
+.career-connects__person {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.career-connects__person:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.career-connects__person:last-child {
+  padding-bottom: 0;
+}
+
+.career-connects__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.career-connects__name {
+  color: var(--color-text-strong);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a.career-connects__name:hover {
+  color: var(--color-mint);
+}
+
+.career-connects__detail {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.career-connects__note {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}

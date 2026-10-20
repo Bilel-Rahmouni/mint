@@ -3,7 +3,7 @@ import './Tag.css'
 
 type Props = {
   children: ReactNode
-  tone?: 'neutral' | 'mint' | 'warn' | 'danger'
+  tone?: 'neutral' | 'mint' | 'warn' | 'danger' | 'web' | 'app'
 }
 
 export function Tag({ children, tone = 'neutral' }: Props) {

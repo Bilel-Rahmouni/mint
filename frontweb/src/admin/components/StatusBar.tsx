@@ -52,7 +52,7 @@ export function StatusBar({ projects }: Props) {
             key={project._id}
             to={adminPath.project(project._id)}
             role="listitem"
-            className={`summary__segment summary__segment--${status}`}
+            className={`summary__segment summary__segment--${status} summary__segment--${project.type === 'app' ? 'app' : 'web'}`}
             title={`${project.name} · ${STATUS_LABEL[status]}`}
             style={{
               height: CHIP,

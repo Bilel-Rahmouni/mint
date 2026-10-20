@@ -21,6 +21,7 @@ const PATHS = {
   pause: 'M8 5v14M16 5v14',
   play: 'm7 4 12 8-12 8V4Z',
   bell: 'M6 8a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9M10 21a2 2 0 0 0 4 0',
+  briefcase: 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M4 7h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7ZM4 12h16',
 } as const
 
 export type IconName = keyof typeof PATHS

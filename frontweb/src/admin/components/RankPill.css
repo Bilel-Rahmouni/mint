@@ -20,7 +20,7 @@
 }
 
 .rank-pill--gold {
-  color: #1a1204;
+  color: #0a0a0a;
   border-color: transparent;
-  background: linear-gradient(135deg, #f7d48b, #f0b429);
+  background: linear-gradient(135deg, #ffffff, #a3a3a3);
 }

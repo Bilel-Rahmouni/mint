@@ -8,6 +8,7 @@ import { errorHandler, notFound } from './middleware/errorHandler.js'
 import alertRoutes from './routes/alerts.js'
 import authRoutes from './routes/auth.js'
 import campaignRoutes from './routes/campaigns.js'
+import careerRoutes from './routes/career.js'
 import contentRoutes from './routes/content.js'
 import integrationRoutes from './routes/integrations.js'
 import keywordRoutes from './routes/keywords.js'
@@ -52,6 +53,7 @@ app.use('/api/portfolio', portfolioRoutes)
 app.use('/api/projects', projectRoutes)
 app.use('/api/todos', todoRoutes)
 app.use('/api/campaigns', campaignRoutes)
+app.use('/api/career', careerRoutes)
 app.use('/api/content', contentRoutes)
 app.use('/api/launches', launchRoutes)
 app.use('/api/keywords', keywordRoutes)

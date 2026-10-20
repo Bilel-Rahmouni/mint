@@ -10,14 +10,19 @@
 
 .sparkline__line {
   fill: none;
-  stroke: var(--color-mint);
+  stroke: var(--kind-web);
   stroke-width: 1.5;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.45));
+  filter: drop-shadow(0 0 4px var(--kind-web-line));
+}
+
+.sparkline--app .sparkline__line {
+  stroke: var(--kind-app);
+  filter: drop-shadow(0 0 4px var(--kind-app-line));
 }
 
 .sparkline__down {
-  stroke: var(--color-danger);
+  stroke: var(--chart-down);
   stroke-width: 2;
   opacity: 0.8;
 }

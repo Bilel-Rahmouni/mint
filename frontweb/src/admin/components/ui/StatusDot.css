@@ -18,17 +18,17 @@
 }
 
 .status-dot--up {
-  --dot: var(--color-mint);
+  --dot: var(--status-up);
   box-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
 }
 
 .status-dot--warning {
-  --dot: var(--color-warn);
+  --dot: var(--status-warn);
   box-shadow: 0 0 10px rgba(247, 185, 85, 0.6);
 }
 
 .status-dot--down {
-  --dot: var(--color-danger);
+  --dot: var(--status-down);
   box-shadow: 0 0 12px rgba(255, 107, 94, 0.8);
 }
 

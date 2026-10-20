@@ -116,7 +116,7 @@ export function ProjectPage() {
             <StatusDot status={status} size="sm" />
             {STATUS_LABEL[status]}
           </span>
-          <Tag>{project.type === 'app' ? 'app' : 'web'}</Tag>
+          <Tag tone={project.type === 'app' ? 'app' : 'web'}>{project.type === 'app' ? 'app' : 'web'}</Tag>
           {link && (
             <a href={link} target="_blank" rel="noreferrer" className="project-page__link mono">
               {hostOf(link)}
@@ -165,7 +165,7 @@ export function ProjectPage() {
             className="project-page__chart"
             aside={<Segmented ariaLabel="Range" value={range} options={RANGE_OPTIONS} onChange={setRange} />}
           >
-            <UptimeChart checks={checks} />
+            <UptimeChart checks={checks} kind={project.type === 'app' ? 'app' : 'web'} />
           </Panel>
         )}
 

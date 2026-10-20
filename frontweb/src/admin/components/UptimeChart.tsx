@@ -5,6 +5,7 @@ import './UptimeChart.css'
 
 type Props = {
   checks: Check[]
+  kind?: 'web' | 'app'
 }
 
 type Bucket = {
@@ -35,7 +36,7 @@ function toBuckets(checks: Check[]): Bucket[] {
   return buckets
 }
 
-export function UptimeChart({ checks }: Props) {
+export function UptimeChart({ checks, kind = 'web' }: Props) {
   const gradientId = `uptime-${useId().replace(/[^a-zA-Z0-9]/g, '')}`
   const buckets = useMemo(() => toBuckets(checks), [checks])
   const [hover, setHover] = useState<number | null>(null)
@@ -55,14 +56,14 @@ export function UptimeChart({ checks }: Props) {
   const active = hover != null ? buckets[hover] : null
 
   return (
-    <div className="uptime-chart" onMouseLeave={() => setHover(null)}>
+    <div className={`uptime-chart uptime-chart--${kind}`} onMouseLeave={() => setHover(null)}>
       <div className="uptime-chart__plot">
         <span className="uptime-chart__axis mono">{formatMs(max)}</span>
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} preserveAspectRatio="none" className="uptime-chart__svg">
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="var(--color-mint)" stopOpacity="0.32" />
-              <stop offset="100%" stopColor="var(--color-mint)" stopOpacity="0" />
+              <stop offset="0%" stopColor={kind === 'app' ? 'var(--kind-app)' : 'var(--kind-web)'} stopOpacity="0.32" />
+              <stop offset="100%" stopColor={kind === 'app' ? 'var(--kind-app)' : 'var(--kind-web)'} stopOpacity="0" />
             </linearGradient>
           </defs>
           {[0.25, 0.5, 0.75].map((f) => (

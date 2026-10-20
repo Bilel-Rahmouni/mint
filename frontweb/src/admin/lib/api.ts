@@ -18,6 +18,10 @@ import type {
   Range,
   StudioTodo,
   TodoArea,
+  CareerBoard,
+  CareerIntros,
+  CareerJob,
+  CareerRun,
 } from './types'
 
 const BASE_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
@@ -169,4 +173,17 @@ export const api = {
     request<{ keyword: AsoKeyword }>(`/api/keywords/${id}`, { method: 'PUT', body: input }),
   deleteKeyword: (id: string) =>
     request<{ success: true }>(`/api/keywords/${id}`, { method: 'DELETE' }),
+
+  getCareer: () => request<CareerBoard>('/api/career'),
+  careerCv: () => request<{ markdown: string }>('/api/career/cv'),
+  careerRun: () => request<CareerRun>('/api/career/run'),
+  startCareerRun: (id: string) =>
+    request<CareerRun>('/api/career/run', { method: 'POST', body: { id } }),
+
+  listCareerJobs: () => request<{ jobs: CareerJob[] }>('/api/career/jobs'),
+  addCareerJob: (text: string) =>
+    request<{ job: CareerJob }>('/api/career/jobs', { method: 'POST', body: { text } }),
+
+  careerConnects: () => request<CareerIntros>('/api/career/connects'),
+  startCareerConnects: () => request<CareerIntros>('/api/career/connects', { method: 'POST' }),
 }

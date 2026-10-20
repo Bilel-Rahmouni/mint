@@ -26,6 +26,7 @@ export function TrafficPanel({ projects, onSynced, index = 0 }: Props) {
   return (
     <IntegrationSection
       title="Analytics"
+      kind="web"
       meta={`${traffic.sites} sites`}
       syncedAt={traffic.syncedAt}
       index={index}

@@ -8,8 +8,6 @@ const UNUSED_HOSTS = new Set([
   'www.koultounsi.com',
   'tounsy.com',
   'www.tounsy.com',
-  'brain-gym.site',
-  'www.brain-gym.site',
 ])
 
 export function isUnusedUrl(url) {

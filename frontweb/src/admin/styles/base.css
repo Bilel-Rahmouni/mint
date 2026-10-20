@@ -3,21 +3,8 @@
   isolation: isolate;
   min-height: 100dvh;
   color-scheme: dark;
+  font-weight: 400;
   background-color: var(--color-bg-deep);
-  background-image:
-    radial-gradient(60rem 40rem at 88% -12%, rgba(74, 222, 128, 0.11), transparent 60%),
-    radial-gradient(48rem 36rem at -10% 110%, rgba(22, 163, 74, 0.08), transparent 60%);
-  background-attachment: fixed;
-}
-
-.admin::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* :where keeps these at element specificity so component classes always win */

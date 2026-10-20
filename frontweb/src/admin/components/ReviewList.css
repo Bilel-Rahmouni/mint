@@ -32,15 +32,15 @@
 }
 
 .reviews__stars--good {
-  color: var(--color-mint-strong);
+  color: var(--status-up-strong);
 }
 
 .reviews__stars--mid {
-  color: var(--color-warn);
+  color: var(--status-warn);
 }
 
 .reviews__stars--bad {
-  color: var(--color-danger);
+  color: var(--status-down);
 }
 
 .reviews__stars-empty {

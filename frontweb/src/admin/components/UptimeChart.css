@@ -42,19 +42,19 @@
 }
 
 .uptime-chart__outage {
-  fill: var(--color-danger-soft);
+  fill: var(--status-down-soft);
 }
 
 .uptime-chart__line {
   fill: none;
-  stroke: var(--color-mint);
+  stroke: var(--kind-web);
   stroke-width: 1.75;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.5));
+  filter: drop-shadow(0 0 6px var(--kind-web-line));
 }
 
 .uptime-chart__cursor {
-  stroke: var(--color-mint-line);
+  stroke: var(--kind-web-line);
   stroke-width: 1;
 }
 
@@ -71,7 +71,7 @@
   color: var(--color-muted-soft);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-line-strong);
-  background: rgba(10, 12, 11, 0.94);
+  background: rgba(10, 10, 10, 0.94);
   box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.9);
   transform: translate(-50%, -100%);
   pointer-events: none;
@@ -81,11 +81,11 @@
 .uptime-chart__tooltip strong {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--color-mint-strong);
+  color: var(--kind-web);
 }
 
 .uptime-chart__tooltip-down {
-  color: var(--color-danger);
+  color: var(--chart-down);
 }
 
 .uptime-chart__strip {
@@ -97,15 +97,32 @@
 .uptime-chart__tick {
   flex: 1;
   border-radius: 2px;
-  background: var(--color-mint);
+  background: var(--kind-web);
   opacity: 0.55;
   transition:
     opacity 120ms var(--ease),
     transform 120ms var(--ease);
 }
 
+.uptime-chart--app .uptime-chart__line {
+  stroke: var(--kind-app);
+  filter: drop-shadow(0 0 6px var(--kind-app-line));
+}
+
+.uptime-chart--app .uptime-chart__cursor {
+  stroke: var(--kind-app-line);
+}
+
+.uptime-chart--app .uptime-chart__tooltip strong {
+  color: var(--kind-app);
+}
+
+.uptime-chart--app .uptime-chart__tick {
+  background: var(--kind-app);
+}
+
 .uptime-chart__tick.is-down {
-  background: var(--color-danger);
+  background: var(--chart-down);
   opacity: 0.9;
 }
 

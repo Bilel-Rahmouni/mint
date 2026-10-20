@@ -383,3 +383,74 @@ export type KeywordInput = {
   rank: number
   volume?: number
 }
+
+export type CareerKpis = {
+  scored: number
+  evaluated: number
+  applied: number
+  good: number
+  waiting: number
+  notesLeft: number
+  invitesThisWeek: number
+  inviteCap: number
+}
+
+export type CareerCommand = {
+  id: string
+  say: string
+  also: string[]
+  what: string
+  loop: string[]
+}
+
+export type CareerQueueJob = {
+  company: string
+  role: string
+  city: string
+  apply: string
+  note: string
+}
+
+export type CareerRun = {
+  status: 'idle' | 'running' | 'finished' | 'error'
+  id: string | null
+  say: string | null
+  summary: string
+  error: string
+}
+
+export type CareerIntro = {
+  name: string
+  city: string
+  why: string
+  href: string
+  note: string
+}
+
+export type CareerIntros = {
+  status: 'idle' | 'running' | 'done' | 'error'
+  error: string
+  people: CareerIntro[]
+}
+
+export type CareerJob = {
+  id: string
+  text: string
+  createdAt: string
+  status: 'scoring' | 'scored' | 'error'
+  company: string
+  role: string
+  url: string
+  score: number | null
+  verdict: '' | 'apply' | 'skip'
+  reason: string
+  error: string
+}
+
+export type CareerBoard = {
+  asOf: string | null
+  kpis: CareerKpis
+  queue: CareerQueueJob[]
+  connects: { name: string; detail: string; href: string }[]
+  commands: CareerCommand[]
+}

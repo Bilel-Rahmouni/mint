@@ -46,13 +46,13 @@ export function ProjectTile({ project, index }: Props) {
   const showPlay = !isMonitored(project) && Boolean(project.packageName)
 
   return (
-    <article className={`tile tile--${status} reveal`} style={stagger(index + 3)}>
+    <article className={`tile tile--${status} tile--${project.type === 'app' ? 'app' : 'web'} reveal`} style={stagger(index + 3)}>
       <Link to={adminPath.project(project._id)} className="tile__cover" aria-label={project.name} />
 
       <header className="tile__head">
         <StatusDot status={status} />
         <h3 className="tile__name">{project.name}</h3>
-        <Tag>{project.type === 'app' ? 'app' : 'web'}</Tag>
+        <Tag tone={project.type === 'app' ? 'app' : 'web'}>{project.type === 'app' ? 'app' : 'web'}</Tag>
       </header>
 
       <div className="tile__host mono">
@@ -66,7 +66,7 @@ export function ProjectTile({ project, index }: Props) {
       </div>
 
       <div className="tile__chart">
-        <Sparkline points={stats?.sparkline ?? []} />
+        <Sparkline points={stats?.sparkline ?? []} kind={project.type === 'app' ? 'app' : 'web'} />
       </div>
 
       {showPlay ? (

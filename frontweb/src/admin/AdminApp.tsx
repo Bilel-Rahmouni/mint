@@ -4,6 +4,7 @@ import { useAdminDocument } from './hooks/useAdminDocument'
 import { AuthProvider } from './lib/auth'
 import { adminPath } from './lib/paths'
 import { CampaignsPage } from './pages/CampaignsPage'
+import { CareerPage } from './pages/CareerPage'
 import { ContentPage } from './pages/ContentPage'
 import { LaunchesPage } from './pages/LaunchesPage'
 import { LoginPage } from './pages/LoginPage'
@@ -30,6 +31,7 @@ export default function AdminApp() {
             <Route path="content" element={<ContentPage />} />
             <Route path="rankings" element={<RankingsPage />} />
             <Route path="launches" element={<LaunchesPage />} />
+            <Route path="career" element={<CareerPage />} />
           </Route>
           <Route path="*" element={<Navigate to={adminPath.overview} replace />} />
         </Routes>

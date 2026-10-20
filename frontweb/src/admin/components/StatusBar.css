@@ -9,7 +9,7 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-line);
   background:
-    radial-gradient(30rem 12rem at 0% 0%, rgba(74, 222, 128, 0.12), transparent 70%),
+    radial-gradient(30rem 12rem at 0% 0%, var(--status-up-soft), transparent 70%),
     var(--gradient-surface),
     var(--color-surface);
   box-shadow: var(--shadow-card);
@@ -20,7 +20,7 @@
 
 .summary--alert {
   background:
-    radial-gradient(30rem 12rem at 0% 0%, rgba(255, 107, 94, 0.14), transparent 70%),
+    radial-gradient(30rem 12rem at 0% 0%, var(--status-down-soft), transparent 70%),
     var(--gradient-surface),
     var(--color-surface);
 }
@@ -32,18 +32,19 @@
 }
 
 .summary__count {
-  font-size: clamp(3rem, 6vw, 4.5rem);
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 6vw, 5rem);
+  font-weight: 400;
   line-height: 0.9;
   letter-spacing: -0.06em;
-  background: var(--gradient-mint);
+  background: var(--gradient-status);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .summary--alert .summary__count {
-  background: linear-gradient(135deg, #ffa79f, var(--color-danger));
+  background: var(--gradient-alert);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -116,17 +117,17 @@
 
 .summary__segment--up {
   color: #07140c;
-  background: linear-gradient(180deg, var(--color-mint-strong), var(--color-mint-deep));
+  background: linear-gradient(180deg, var(--status-up-strong), var(--status-up-deep));
 }
 
 .summary__segment--warning {
   color: #2a1c08;
-  background: linear-gradient(180deg, #ffd38a, var(--color-warn));
+  background: linear-gradient(180deg, #ffd38a, var(--status-warn));
 }
 
 .summary__segment--down {
   color: #2a0c0a;
-  background: linear-gradient(180deg, #ff9b91, var(--color-danger));
+  background: linear-gradient(180deg, #ff9b91, var(--status-down));
   box-shadow: 0 0 16px rgba(255, 107, 94, 0.6);
 }
 
@@ -139,5 +140,29 @@
   color: var(--color-muted-soft);
   background: rgba(255, 255, 255, 0.04);
   border: 1px dashed var(--color-faint);
+}
+
+.summary__segment--web,
+.summary__segment--app {
+  position: relative;
+}
+
+.summary__segment--web::after,
+.summary__segment--app::after {
+  content: '';
+  position: absolute;
+  top: 0.45rem;
+  bottom: 0.45rem;
+  left: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+}
+
+.summary__segment--web::after {
+  background: var(--kind-web);
+}
+
+.summary__segment--app::after {
+  background: var(--kind-app);
 }
 

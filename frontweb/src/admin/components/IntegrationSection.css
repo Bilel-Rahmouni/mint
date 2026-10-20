@@ -35,9 +35,19 @@
   height: 0.45rem;
   margin-right: 0.6rem;
   border-radius: 50%;
-  background: var(--gradient-mint);
-  box-shadow: var(--shadow-glow);
+  background: var(--color-text-strong);
+  box-shadow: none;
   vertical-align: middle;
+}
+
+.integration--web .integration__title::before {
+  background: var(--kind-web);
+  box-shadow: 0 0 12px var(--kind-web-line);
+}
+
+.integration--app .integration__title::before {
+  background: var(--kind-app);
+  box-shadow: 0 0 12px var(--kind-app-line);
 }
 
 .integration__actions {

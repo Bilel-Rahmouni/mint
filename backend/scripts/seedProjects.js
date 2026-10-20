@@ -1,7 +1,14 @@
 import mongoose from 'mongoose'
 import { config } from '../src/config.js'
 import { isUnusedUrl } from '../src/lib/unusedHosts.js'
+import { Alert } from '../src/models/Alert.js'
+import { Campaign } from '../src/models/Campaign.js'
+import { Check } from '../src/models/Check.js'
+import { ContentPost } from '../src/models/ContentPost.js'
+import { Keyword } from '../src/models/Keyword.js'
+import { Launch } from '../src/models/Launch.js'
 import { Project } from '../src/models/Project.js'
+import { Todo } from '../src/models/Todo.js'
 
 const storeUrl = (packageName) => `https://play.google.com/store/apps/details?id=${packageName}`
 
@@ -22,11 +29,11 @@ const projects = [
     url: 'https://ultimatecalculator.site',
     ...play('com.indigenoustech.ultimatecalculators'),
   },
-  { name: 'brain gym', type: 'website', url: 'https://brain-gym.site' },
   { name: 'lingomate', type: 'app', url: 'https://lingomate.site', ...play('com.indigenoustech.lingora') },
   { name: 'frontend prep', type: 'app', url: 'https://frontendprep.site', ...play('com.indigenoustech.frontendprep') },
   { name: 'renklar', type: 'website', url: 'https://renklar.dk', ...play('com.indigenoustech.renklar') },
   { name: 'dont', type: 'app', url: 'https://dontapp.site', ...play('com.indigenoustech.dont') },
+  { name: 'bilelrahmouni.com', type: 'website', url: 'https://bilelrahmouni.com' },
   { name: 'mint studio', type: 'website', url: 'https://mintstudio.io', showOnSite: false },
 ]
 
@@ -36,7 +43,6 @@ const FILL_IF_EMPTY = ['url', 'packageName', 'storeUrl']
 // Old placeholder urls replaced by the real domains; any other dashboard edit is kept
 const RENAMED_URLS = {
   'https://cashcash.tn': 'https://cash-game.site',
-  'https://braingym.tn': 'https://brain-gym.site',
   'https://ultimatecalculator.app': 'https://ultimatecalculator.site',
   'https://dozone.io': 'https://dozone.site',
   'https://lingora.site': 'https://lingomate.site',
@@ -50,6 +56,7 @@ const MERGE_INTO = {
 const REMOVE = [
   { name: 'renklar (legacy)' },
   { packageName: 'com.renklar.app' },
+  { name: 'brain gym' },
 ]
 
 await mongoose.connect(config.mongoUri)
@@ -106,8 +113,20 @@ for (const [fromName, intoName] of Object.entries(MERGE_INTO)) {
 
 let removed = 0
 for (const query of REMOVE) {
-  const result = await Project.deleteMany(query)
-  removed += result.deletedCount
+  const matches = await Project.find(query)
+  for (const project of matches) {
+    await Promise.all([
+      Alert.deleteMany({ projectId: project._id }),
+      Campaign.deleteMany({ projectId: project._id }),
+      Check.deleteMany({ projectId: project._id }),
+      ContentPost.deleteMany({ projectId: project._id }),
+      Keyword.deleteMany({ projectId: project._id }),
+      Launch.deleteMany({ projectId: project._id }),
+      Todo.deleteMany({ projectId: project._id }),
+    ])
+    await project.deleteOne()
+    removed += 1
+  }
 }
 
 console.log(`Seed: ${created} created, ${updated} updated, ${merged} merged, ${removed} removed, ${projects.length - created - updated} unchanged`)
