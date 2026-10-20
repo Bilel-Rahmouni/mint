@@ -9,6 +9,7 @@ import { ProjectFormModal } from '../components/ProjectFormModal'
 import { ProjectTile } from '../components/ProjectTile'
 import { SearchPanel } from '../components/SearchPanel'
 import { StatusBar } from '../components/StatusBar'
+import { TodoBoard } from '../components/TodoBoard'
 import { TrafficPanel } from '../components/TrafficPanel'
 import { Button } from '../components/ui/Button'
 import { Segmented } from '../components/ui/Segmented'
@@ -56,6 +57,7 @@ export function OverviewPage() {
       ) : (
         <>
           <StatusBar projects={projects} />
+          <TodoBoard projects={projects} check />
           <AlertStrip alerts={alerts} />
           <div className="overview__grid">
             {visible.map((project, i) => (

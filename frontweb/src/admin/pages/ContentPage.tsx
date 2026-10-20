@@ -5,6 +5,7 @@ import { ContentModal } from '../components/ContentModal'
 import { Loader } from '../components/Loader'
 import { PageHeader } from '../components/PageHeader'
 import { WeekSwitcher } from '../components/WeekSwitcher'
+import { TodoBoard } from '../components/TodoBoard'
 import { Button } from '../components/ui/Button'
 import { Segmented } from '../components/ui/Segmented'
 import { useProjects } from '../hooks/useProjects'
@@ -88,6 +89,8 @@ export function ContentPage() {
       </PageHeader>
 
       {error && <p className="content-page__error">{error}</p>}
+
+      <TodoBoard projects={projects} area="content" areas={['content']} />
 
       <div className="content-page__scroller">
         <div className="content-page__week">

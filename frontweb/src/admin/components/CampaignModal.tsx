@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { api } from '../lib/api'
 import { daysBetween, daysFromToday } from '../lib/dates'
 import { formatMoney } from '../lib/format'
 import { adChannels, campaignObjectives } from '../lib/growth'
-import type { AdChannel, Campaign, CampaignInput, CampaignObjective, Project } from '../lib/types'
+import type { AdChannel, Campaign, CampaignInput, CampaignObjective, GoogleAdsCampaign, Project } from '../lib/types'
 import { Button } from './ui/Button'
 import { Field, SelectField } from './ui/Field'
 import { Modal } from './ui/Modal'
@@ -30,16 +30,36 @@ function toForm(campaign?: Campaign, projectId = ''): CampaignInput {
     revenue: campaign?.revenue ?? 0,
     start: campaign?.start ?? daysFromToday(0),
     end: campaign?.end ?? daysFromToday(30),
+    googleCampaignId: campaign?.googleCampaignId ?? '',
   }
 }
 
 export function CampaignModal({ campaign, projects, onClose, onSaved, onDeleted }: Props) {
   const [form, setForm] = useState<CampaignInput>(() => toForm(campaign, projects[0]?._id ?? ''))
+  const [googleCampaigns, setGoogleCampaigns] = useState<GoogleAdsCampaign[]>([])
+  const [googleNote, setGoogleNote] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const set = <K extends keyof CampaignInput>(key: K, value: CampaignInput[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }))
+
+  useEffect(() => {
+    if (form.channel !== 'google') return
+    let active = true
+    api.listGoogleCampaigns()
+      .then((result) => {
+        if (!active) return
+        setGoogleCampaigns(result.campaigns)
+        setGoogleNote(result.configured ? result.message ?? null : result.message || 'Google Ads is not configured')
+      })
+      .catch((err) => {
+        if (active) setGoogleNote(err instanceof Error ? err.message : 'Google Ads is not configured')
+      })
+    return () => {
+      active = false
+    }
+  }, [form.channel])
 
   const days = Math.max(daysBetween(form.start, form.end), 1)
 
@@ -119,6 +139,25 @@ export function CampaignModal({ campaign, projects, onClose, onSaved, onDeleted 
             </option>
           ))}
         </SelectField>
+        {form.channel === 'google' && (
+          <SelectField
+            className="campaign-modal__full"
+            label="Google Ads"
+            hint={googleNote || undefined}
+            value={form.googleCampaignId ?? ''}
+            onChange={(e) => set('googleCampaignId', e.target.value)}
+          >
+            <option value="">Not linked</option>
+            {googleCampaigns.map((row) => (
+              <option key={row.id} value={row.id}>
+                {row.name}
+              </option>
+            ))}
+            {form.googleCampaignId && !googleCampaigns.some((row) => row.id === form.googleCampaignId) && (
+              <option value={form.googleCampaignId}>{form.googleCampaignId}</option>
+            )}
+          </SelectField>
+        )}
         <SelectField
           label="Objective"
           value={form.objective}

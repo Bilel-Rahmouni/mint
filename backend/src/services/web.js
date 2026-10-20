@@ -63,6 +63,41 @@ async function discoverAnalyticsProperties() {
   return properties
 }
 
+export async function loadSearchSites() {
+  const { sites } = await discoverLinks()
+  if (sites instanceof Error) throw sites
+  return sites
+}
+
+export async function fetchOpportunityRows(site) {
+  const rows = await searchQuery(site, {
+    startDate: isoDay(-WINDOW_DAYS),
+    endDate: isoDay(-1),
+    dimensions: ['query', 'page'],
+    rowLimit: 100,
+  })
+  const best = new Map()
+  for (const row of rows) {
+    const key = row.keys?.[0]
+    const page = row.keys?.[1]
+    if (!key) continue
+    const current = best.get(key)
+    if (!current || row.impressions > current.impressions) {
+      best.set(key, {
+        key,
+        page,
+        clicks: row.clicks || 0,
+        impressions: row.impressions || 0,
+        position: row.position,
+      })
+    }
+  }
+  return [...best.values()]
+    .filter((row) => row.impressions >= 5 && row.position >= 4 && row.position <= 30)
+    .sort((a, b) => b.impressions - a.impressions)
+    .slice(0, 3)
+}
+
 async function discoverLinks() {
   const [sites, properties] = await Promise.allSettled([discoverSearchSites(), discoverAnalyticsProperties()])
   const value = (r) => (r.status === 'fulfilled' ? r.value : r.reason)
@@ -197,7 +232,16 @@ export async function runWebSync(project, links) {
 
   if (search.status === 'fulfilled' && search.value) {
     const { site, summary, series, queries } = search.value
-    Object.assign(web, summary, { searchSite: site, queries })
+    const prior = new Map(
+      (previous.queries || [])
+        .filter((query) => query.position != null)
+        .map((query) => [query.key, query.position]),
+    )
+    const withMove = queries.map((query) => ({
+      ...query,
+      ...(prior.has(query.key) ? { previousPosition: prior.get(query.key) } : {}),
+    }))
+    Object.assign(web, summary, { searchSite: site, queries: withMove })
     for (const d of series) Object.assign(point(d.date), { clicks: d.clicks, impressions: d.impressions })
   } else {
     web.errors.search = errorMessage(search)

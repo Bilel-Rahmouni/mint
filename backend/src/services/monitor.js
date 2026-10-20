@@ -3,6 +3,10 @@ import { isUnusedUrl } from '../lib/unusedHosts.js'
 import { Check } from '../models/Check.js'
 import { Project } from '../models/Project.js'
 import { logger } from '../utils/logger.js'
+import { daysUntil, raiseAlert } from './alerts.js'
+
+const SSL_WARN_DAYS = 21
+const DOMAIN_WARN_DAYS = 30
 
 const REQUEST_TIMEOUT_MS = 10_000
 const USER_AGENT = 'MintMonitor/1.0 (+https://mintstudio.io)'
@@ -97,13 +101,35 @@ async function checkDomain(hostname) {
   }
 }
 
+function stamp(date) {
+  return new Date(date).toISOString()
+}
+
 export async function runUptimeCheck(project) {
   if (!project.url || isUnusedUrl(project.url)) return null
+  const previous = project.lastCheck
   const result = await checkUptime(project.url)
   const checkedAt = new Date()
   await Check.create({ projectId: project._id, ...result, checkedAt })
   project.lastCheck = { ...result, checkedAt }
   await project.save()
+
+  if (previous?.up === true && !result.up && previous.checkedAt) {
+    await raiseAlert({
+      projectId: project._id,
+      kind: 'down',
+      dedupeKey: `down:${project._id}:${stamp(previous.checkedAt)}`,
+      title: `${project.name} is down`,
+    })
+  }
+  if (previous?.up === false && result.up && previous.checkedAt) {
+    await raiseAlert({
+      projectId: project._id,
+      kind: 'up',
+      dedupeKey: `up:${project._id}:${stamp(previous.checkedAt)}`,
+      title: `${project.name} is back up`,
+    })
+  }
   return project.lastCheck
 }
 
@@ -115,6 +141,26 @@ export async function runCertificateChecks(project) {
   project.ssl = ssl
   project.domain = domain
   await project.save()
+
+  const sslDays = daysUntil(ssl.validTo)
+  if (ssl.validTo && sslDays != null && sslDays <= SSL_WARN_DAYS) {
+    await raiseAlert({
+      projectId: project._id,
+      kind: 'ssl',
+      dedupeKey: `ssl:${project._id}:${stamp(ssl.validTo)}`,
+      title: sslDays < 0 ? `${project.name} SSL expired` : `${project.name} SSL expires in ${sslDays}d`,
+    })
+  }
+
+  const domainDays = daysUntil(domain.expiresAt)
+  if (domain.expiresAt && domainDays != null && domainDays <= DOMAIN_WARN_DAYS) {
+    await raiseAlert({
+      projectId: project._id,
+      kind: 'domain',
+      dedupeKey: `domain:${project._id}:${stamp(domain.expiresAt)}`,
+      title: domainDays < 0 ? `${project.name} domain expired` : `${project.name} domain expires in ${domainDays}d`,
+    })
+  }
 }
 
 export async function runFullCheck(project) {

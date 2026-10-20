@@ -45,12 +45,13 @@ export async function googleFetch(url, options) {
   return callGoogle(await getAccessToken(), url, options)
 }
 
-export async function callGoogle(token, url, { method = 'GET', body, raw = false } = {}) {
+export async function callGoogle(token, url, { method = 'GET', body, raw = false, headers = {} } = {}) {
   const res = await fetch(url, {
     method,
     headers: {
       Authorization: `Bearer ${token}`,
       ...(body && { 'Content-Type': 'application/json' }),
+      ...headers,
     },
     body: body ? JSON.stringify(body) : undefined,
     signal: AbortSignal.timeout(30_000),

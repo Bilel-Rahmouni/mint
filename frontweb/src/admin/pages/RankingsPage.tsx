@@ -6,12 +6,13 @@ import { Loader } from '../components/Loader'
 import { PageHeader } from '../components/PageHeader'
 import { Panel } from '../components/Panel'
 import { RankPill } from '../components/RankPill'
+import { TodoBoard } from '../components/TodoBoard'
 import { StatCard } from '../components/StatCard'
 import { Button } from '../components/ui/Button'
 import { Segmented } from '../components/ui/Segmented'
 import { useProjects } from '../hooks/useProjects'
 import { api } from '../lib/api'
-import { formatCount, formatPosition } from '../lib/format'
+import { formatCount } from '../lib/format'
 import type { AsoKeyword } from '../lib/types'
 import './RankingsPage.css'
 
@@ -25,6 +26,7 @@ type SeoRow = {
   clicks: number
   impressions: number
   position: number
+  change: number
 }
 
 function summarize(rows: { rank: number; change: number }[]) {
@@ -66,6 +68,7 @@ export function RankingsPage() {
             clicks: q.clicks,
             impressions: q.impressions,
             position: q.position,
+            change: q.previousPosition == null ? 0 : Math.round(q.previousPosition - q.position),
           })),
         )
         .sort((a, b) => a.position - b.position),
@@ -78,7 +81,7 @@ export function RankingsPage() {
     () =>
       source === 'aso'
         ? summarize(asoRows.map((k) => ({ rank: k.rank, change: k.change })))
-        : summarize(seoRows.map((k) => ({ rank: k.position, change: 0 }))),
+        : summarize(seoRows.map((k) => ({ rank: k.position, change: k.change }))),
     [source, asoRows, seoRows],
   )
 
@@ -96,6 +99,7 @@ export function RankingsPage() {
     { key: 'product', header: 'Site', hideOnMobile: true, render: (k) => k.projectName },
     { key: 'clicks', header: 'Clicks', align: 'right', hideOnMobile: true, render: (k) => formatCount(k.clicks) },
     { key: 'impressions', header: 'Impr.', align: 'right', hideOnMobile: true, render: (k) => formatCount(k.impressions) },
+    { key: 'change', header: 'Move', align: 'right', render: (k) => <Delta value={k.change} /> },
     { key: 'position', header: 'Position', align: 'right', render: (k) => <RankPill rank={Math.round(k.position)} /> },
   ]
 
@@ -127,19 +131,16 @@ export function RankingsPage() {
 
       {error && <p className="rankings__error">{error}</p>}
 
+      <TodoBoard
+        projects={projects}
+        area={source === 'aso' ? 'aso' : 'seo'}
+        areas={source === 'aso' ? ['aso'] : ['seo']}
+      />
+
       <div className="rankings__stats">
         <StatCard label="Avg. position" value={summary.avg} index={0} />
         <StatCard label="In top 10" value={String(summary.top10)} tone="mint" index={1} />
-        {source === 'aso' ? (
-          <StatCard label="Moved up" value={String(summary.improved)} index={2} />
-        ) : (
-          <StatCard
-            label="Keywords"
-            value={formatCount(seoRows.length)}
-            detail={seoRows.length ? `avg ${formatPosition(Number(summary.avg))}` : undefined}
-            index={2}
-          />
-        )}
+        <StatCard label="Moved up" value={String(summary.improved)} index={2} />
       </div>
 
       <Panel title={source === 'aso' ? 'Tracked keywords' : 'Search Console'} index={1} className="rankings__table">

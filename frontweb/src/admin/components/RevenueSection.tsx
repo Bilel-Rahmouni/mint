@@ -35,6 +35,13 @@ export function RevenueSection({ project, onSynced, index = 0 }: Props) {
           detail={formatChange(revenue.earnings30d, revenue.prev30d)}
           tone={revenue.earnings30d ? (growing ? 'mint' : 'warn') : 'default'}
         />
+        <StatCard index={index + 2} label="Ad spend 30d" value={money(project.adSpend30d ?? 0)} tone="warn" />
+        <StatCard
+          index={index + 3}
+          label="After ads"
+          value={money((revenue.earnings30d ?? 0) - (project.adSpend30d ?? 0))}
+          tone={(revenue.earnings30d ?? 0) - (project.adSpend30d ?? 0) >= 0 ? 'mint' : 'warn'}
+        />
         {revenue.admobApps?.length ? (
           <>
             <StatCard index={index + 2} label="AdMob 30d" value={money(revenue.admob30d)} />

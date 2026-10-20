@@ -5,6 +5,7 @@ import { rejectInvalid } from '../middleware/validate.js'
 import { CAMPAIGN_CHANNELS, CAMPAIGN_OBJECTIVES, CAMPAIGN_STATUSES, Campaign } from '../models/Campaign.js'
 import { Project } from '../models/Project.js'
 import { isObjectId } from '../lib/objectId.js'
+import { listGoogleCampaigns, syncLinkedCampaigns } from '../services/googleAds.js'
 
 const router = Router()
 router.use(protect)
@@ -31,7 +32,28 @@ const validators = [
   body('start').matches(DATE).withMessage('Start date is required'),
   body('end').matches(DATE).withMessage('End date is required')
     .custom((end, { req }) => end >= req.body.start).withMessage('End must be after start'),
+  body('googleCampaignId').optional({ values: 'falsy' }).matches(/^\d{1,20}$/).withMessage('Google campaign id is invalid'),
 ]
+
+function campaignFields(body) {
+  const googleCampaignId = body.channel === 'google' ? (body.googleCampaignId || '') : ''
+  return { ...body, googleCampaignId }
+}
+
+router.get('/google', async (_req, res) => {
+  res.json(await listGoogleCampaigns())
+})
+
+router.post('/google/sync', async (_req, res) => {
+  try {
+    const result = await syncLinkedCampaigns()
+    if (!result.configured) return res.json({ ...result, campaigns: [] })
+    const campaigns = await Campaign.find().sort({ start: -1, createdAt: -1 }).lean()
+    res.json({ configured: true, campaigns })
+  } catch (err) {
+    res.status(502).json({ message: err.message || 'Google Ads sync failed' })
+  }
+})
 
 router.get('/', async (_req, res) => {
   const campaigns = await Campaign.find().sort({ start: -1, createdAt: -1 }).lean()
@@ -43,7 +65,7 @@ router.post('/', validators, rejectInvalid, async (req, res) => {
   if (!project) return res.status(400).json({ message: 'Project not found' })
 
   const campaign = await Campaign.create({
-    ...req.body,
+    ...campaignFields(req.body),
     status: deriveStatus(req.body.start, req.body.end, req.body.status),
     spent: req.body.spent ?? 0,
     conversions: req.body.conversions ?? 0,
@@ -59,7 +81,7 @@ router.put('/:id', validators, rejectInvalid, async (req, res) => {
   const campaign = await Campaign.findByIdAndUpdate(
     req.params.id,
     {
-      ...req.body,
+      ...campaignFields(req.body),
       status: req.body.status === 'Paused' || req.body.status === 'Ended'
         ? req.body.status
         : deriveStatus(req.body.start, req.body.end, req.body.status),

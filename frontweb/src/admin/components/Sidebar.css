@@ -12,6 +12,9 @@
 }
 
 .sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   padding: 0 0.7rem;
 }
 

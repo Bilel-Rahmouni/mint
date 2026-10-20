@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 import { adminPath } from '../lib/paths'
+import { AlertBell } from './AlertBell'
 import { Icon } from './ui/Icon'
 import type { IconName } from './ui/Icon'
 import { ConsoleLogo } from './ConsoleLogo'
@@ -22,6 +23,7 @@ export function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar__brand">
         <ConsoleLogo />
+        <AlertBell />
       </div>
 
       <nav className="sidebar__nav">

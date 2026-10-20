@@ -5,14 +5,19 @@ import type {
   CampaignInput,
   ContentInput,
   ContentPost,
+  GoogleAdsCampaign,
   GoogleIntegration,
+  InboxAlert,
   KeywordInput,
+  PubloraConnection,
   Launch,
   LaunchInput,
   Project,
   ProjectDetail,
   ProjectInput,
   Range,
+  StudioTodo,
+  TodoArea,
 } from './types'
 
 const BASE_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
@@ -116,6 +121,15 @@ export const api = {
 
   disconnectGoogle: () => request<GoogleIntegration>('/api/integrations/google', { method: 'DELETE' }),
 
+  listAlerts: () => request<{ alerts: InboxAlert[]; unread: number }>('/api/alerts'),
+  readAlerts: () => request<{ success: true }>('/api/alerts/read', { method: 'POST' }),
+
+  listTodos: () => request<{ todos: StudioTodo[] }>('/api/todos'),
+  createTodo: (input: { projectId: string; title: string; area?: TodoArea }) =>
+    request<{ todo: StudioTodo }>('/api/todos', { method: 'POST', body: input }),
+  toggleTodo: (id: string) => request<{ todo: StudioTodo }>(`/api/todos/${id}/toggle`, { method: 'POST' }),
+  checkTodos: () => request<{ created: number; todos: StudioTodo[] }>('/api/todos/check', { method: 'POST' }),
+
   listCampaigns: () => request<{ campaigns: Campaign[] }>('/api/campaigns'),
   createCampaign: (input: CampaignInput) =>
     request<{ campaign: Campaign }>('/api/campaigns', { method: 'POST', body: input }),
@@ -125,8 +139,14 @@ export const api = {
     request<{ campaign: Campaign }>(`/api/campaigns/${id}/toggle`, { method: 'POST' }),
   deleteCampaign: (id: string) =>
     request<{ success: true }>(`/api/campaigns/${id}`, { method: 'DELETE' }),
+  listGoogleCampaigns: () =>
+    request<{ configured: boolean; message?: string; campaigns: GoogleAdsCampaign[] }>('/api/campaigns/google'),
+  syncGoogleAds: () =>
+    request<{ configured: boolean; message?: string; campaigns: Campaign[] }>('/api/campaigns/google/sync', { method: 'POST' }),
 
   listContent: () => request<{ posts: ContentPost[] }>('/api/content'),
+  listPubloraConnections: () =>
+    request<{ configured: boolean; message?: string; connections: PubloraConnection[] }>('/api/content/connections'),
   createContent: (input: ContentInput) =>
     request<{ post: ContentPost }>('/api/content', { method: 'POST', body: input }),
   updateContent: (id: string, input: ContentInput) =>

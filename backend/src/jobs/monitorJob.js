@@ -1,7 +1,9 @@
 import cron from 'node-cron'
-import { googleEnabled, googleOAuthEnabled } from '../config.js'
+import { googleAdsEnabled, googleEnabled, googleOAuthEnabled } from '../config.js'
 import { runAllCertificateChecks, runAllUptimeChecks } from '../services/monitor.js'
 import { runAllPlaySyncs } from '../services/play.js'
+import { publishDuePosts } from '../services/publish.js'
+import { syncLinkedCampaigns } from '../services/googleAds.js'
 import { runScheduledRevenueSync } from '../services/revenue.js'
 import { runAllWebSyncs } from '../services/web.js'
 import { logger } from '../utils/logger.js'
@@ -56,9 +58,30 @@ export function startMonitorJob() {
     runScheduledRevenueSync()
   }
 
+  cron.schedule('* * * * *', async () => {
+    try {
+      await publishDuePosts()
+    } catch (err) {
+      logger.error('Publish job error:', err)
+    }
+  })
+
+  if (googleAdsEnabled) {
+    cron.schedule('0 8 * * *', async () => {
+      try {
+        const result = await syncLinkedCampaigns()
+        logger.info(`Google Ads job: synced ${result.updated} campaigns`)
+      } catch (err) {
+        logger.error('Google Ads job error:', err)
+      }
+    }, { timezone: TIMEZONE })
+  }
+
   logger.info(
-    `Monitor scheduled: uptime every 5 min, SSL + domain daily at 06:00${
+    `Monitor scheduled: uptime every 5 min, SSL + domain daily at 06:00, content every minute${
       googleEnabled ? ', Google Play at 07:00, Search Console + Analytics at 07:15' : ''
-    }${googleOAuthEnabled ? ', AdMob + AdSense every 3h' : ''}`,
+    }${googleOAuthEnabled ? ', AdMob + AdSense every 3h' : ''}${
+      googleAdsEnabled ? ', Google Ads daily at 08:00' : ''
+    }`,
   )
 }

@@ -2,6 +2,7 @@ import { googleOAuthEnabled } from '../config.js'
 import { Integration } from '../models/Integration.js'
 import { Project } from '../models/Project.js'
 import { logger } from '../utils/logger.js'
+import { considerRevenueAlert } from './alerts.js'
 import { GoogleApiError } from './googleAuth.js'
 import { ADMOB_SCOPE, ADSENSE_SCOPE, NotConnectedError, userFetch } from './googleOAuth.js'
 
@@ -399,6 +400,7 @@ async function syncRevenue() {
 
   const syncedAt = new Date()
   const ops = []
+  const scored = []
   for (const project of projects) {
     const entry = perProject.get(String(project._id))
     if (!entry) {
@@ -407,6 +409,7 @@ async function syncRevenue() {
     }
     const points = toSeries(entry.points, win.start)
     const summary = windowSummary(points, win)
+    scored.push({ project, points })
     ops.push({
       updateOne: {
         filter: { _id: project._id },
@@ -428,6 +431,9 @@ async function syncRevenue() {
     })
   }
   if (ops.length) await Project.bulkWrite(ops)
+  for (const { project, points } of scored) {
+    await considerRevenueAlert(project, points, win.yesterday)
+  }
 
   return integration
 }

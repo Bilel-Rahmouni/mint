@@ -10,6 +10,12 @@ const contentPostSchema = new mongoose.Schema({
   status: { type: String, enum: STATUSES, default: 'Scheduled' },
   date: { type: String, required: true, index: true },
   time: { type: String, required: true },
+  body: { type: String, maxlength: 5000, default: '' },
+  link: { type: String, maxlength: 500, default: '' },
+  mediaUrl: { type: String, maxlength: 500, default: '' },
+  platformId: { type: String, maxlength: 120, default: '' },
+  externalId: { type: String, maxlength: 80, default: '' },
+  publishError: { type: String, maxlength: 300, default: '' },
 }, { timestamps: true })
 
 export const CONTENT_SOCIALS = SOCIALS

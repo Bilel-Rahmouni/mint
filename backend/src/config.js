@@ -43,7 +43,23 @@ export const config = {
     clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || '',
     redirectUri: process.env.GOOGLE_OAUTH_REDIRECT_URI || `http://localhost:${port}/api/integrations/google/callback`,
   },
+  googleAds: {
+    developerToken: process.env.GOOGLE_ADS_DEVELOPER_TOKEN || '',
+    customerId: (process.env.GOOGLE_ADS_CUSTOMER_ID || '').replace(/\D/g, ''),
+    loginCustomerId: (process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID || '').replace(/\D/g, ''),
+  },
+  smtp: {
+    host: process.env.SMTP_HOST || '',
+    port: Number(process.env.SMTP_PORT) || 587,
+    user: process.env.SMTP_USER || '',
+    pass: process.env.SMTP_PASS || '',
+    from: process.env.ALERT_FROM || '',
+  },
+  publoraApiKey: process.env.PUBLORA_API_KEY || '',
 }
 
 export const googleEnabled = Boolean(config.google.clientEmail && config.google.privateKey)
 export const googleOAuthEnabled = Boolean(config.googleOAuth.clientId && config.googleOAuth.clientSecret)
+export const googleAdsEnabled = Boolean(
+  googleOAuthEnabled && config.googleAds.developerToken && config.googleAds.customerId,
+)

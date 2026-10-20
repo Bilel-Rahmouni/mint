@@ -1,0 +1,117 @@
+.todos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line);
+  background:
+    radial-gradient(24rem 10rem at 100% 0%, rgba(74, 222, 128, 0.08), transparent 70%),
+    var(--gradient-surface),
+    var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.todos__add {
+  display: grid;
+  grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  align-items: end;
+}
+
+.todos__add--check {
+  grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr) auto auto;
+}
+
+.todos__notice,
+.todos__error {
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.todos__notice {
+  color: var(--color-mint-strong);
+}
+
+.todos__error {
+  color: var(--color-danger);
+}
+
+.todos__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.todos__row label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.45rem 0.2rem;
+  cursor: pointer;
+}
+
+.todos__row input {
+  margin-top: 0.2rem;
+  accent-color: var(--color-mint);
+}
+
+.todos__chip,
+.todos__area {
+  flex-shrink: 0;
+  height: 1.35rem;
+  padding: 0 0.5rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.68rem;
+  line-height: 1.35rem;
+  letter-spacing: 0.01em;
+}
+
+.todos__chip {
+  color: var(--color-mint-strong);
+  background: var(--color-mint-soft);
+  border: 1px solid var(--color-mint-line);
+}
+
+.todos__area {
+  color: var(--color-muted-soft);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-line-strong);
+}
+
+.todos__title {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.todos__row.is-done .todos__title {
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.todos__done {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.todos__done-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-soft);
+}
+
+@media (max-width: 800px) {
+  .todos__add {
+    grid-template-columns: 1fr;
+  }
+}

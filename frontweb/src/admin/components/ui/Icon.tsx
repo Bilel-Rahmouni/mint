@@ -20,6 +20,7 @@ const PATHS = {
   rocket: 'M12 15c-3 0-5 2-5 5 3 0 5-2 5-5Zm0 0c0-3 2-5 5-5 0 3-2 5-5 5Zm-1-9 1-3 1 3 3 1-3 1-1 3-1-3-3-1 3-1ZM6 10l-2 1 2 1 1 2 1-2 2-1-2-1-1-2-1 2Z',
   pause: 'M8 5v14M16 5v14',
   play: 'm7 4 12 8-12 8V4Z',
+  bell: 'M6 8a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9M10 21a2 2 0 0 0 4 0',
 } as const
 
 export type IconName = keyof typeof PATHS

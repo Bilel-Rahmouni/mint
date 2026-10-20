@@ -97,7 +97,14 @@ const projectSchema = new mongoose.Schema({
       sessions: Number,
       views: Number,
     }],
-    queries: [{ _id: false, key: String, clicks: Number, impressions: Number, position: Number }],
+    queries: [{
+      _id: false,
+      key: String,
+      clicks: Number,
+      impressions: Number,
+      position: Number,
+      previousPosition: Number,
+    }],
     pages: [{ _id: false, key: String, value: Number }],
     sources: [{ _id: false, key: String, value: Number }],
     errors: {

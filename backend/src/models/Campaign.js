@@ -16,6 +16,7 @@ const campaignSchema = new mongoose.Schema({
   revenue: { type: Number, default: 0, min: 0 },
   start: { type: String, required: true },
   end: { type: String, required: true },
+  googleCampaignId: { type: String, maxlength: 20, default: '' },
 }, { timestamps: true })
 
 campaignSchema.index({ status: 1, start: 1 })

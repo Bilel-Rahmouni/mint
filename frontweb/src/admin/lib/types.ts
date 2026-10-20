@@ -74,7 +74,13 @@ export type WebPoint = {
 
 export type TopRow = { key: string; value: number }
 
-export type SearchQuery = { key: string; clicks: number; impressions: number; position: number }
+export type SearchQuery = {
+  key: string
+  clicks: number
+  impressions: number
+  position: number
+  previousPosition?: number
+}
 
 export type WebData = {
   searchSite?: string
@@ -186,6 +192,7 @@ export type Project = {
   play?: PlayData
   web?: WebData
   revenue?: ProjectRevenue
+  adSpend30d?: number
   createdAt: string
   updatedAt: string
   stats24h?: UptimeStats & { sparkline: SparkPoint[] }
@@ -223,6 +230,26 @@ export type ProjectDetail = {
   stats: Record<Range, UptimeStats>
 }
 
+export type TodoArea = 'seo' | 'aso' | 'ads' | 'content' | 'launch' | 'general'
+
+export type StudioTodo = {
+  _id: string
+  projectId: string
+  title: string
+  area: TodoArea
+  doneAt?: string | null
+  createdAt: string
+}
+
+export type InboxAlert = {
+  _id: string
+  projectId?: string
+  kind: 'down' | 'up' | 'ssl' | 'domain' | 'revenue' | 'publish'
+  title: string
+  readAt?: string
+  createdAt: string
+}
+
 export type AdminUser = {
   id: string
   name: string
@@ -252,6 +279,7 @@ export type Campaign = {
   revenue: number
   start: string
   end: string
+  googleCampaignId?: string
 }
 
 export type CampaignInput = {
@@ -266,6 +294,13 @@ export type CampaignInput = {
   revenue?: number
   start: string
   end: string
+  googleCampaignId?: string
+}
+
+export type GoogleAdsCampaign = {
+  id: string
+  name: string
+  status: string
 }
 
 export type ContentPost = {
@@ -276,6 +311,12 @@ export type ContentPost = {
   status: PostStatus
   date: string
   time: string
+  body?: string
+  link?: string
+  mediaUrl?: string
+  platformId?: string
+  externalId?: string
+  publishError?: string
 }
 
 export type ContentInput = {
@@ -285,6 +326,22 @@ export type ContentInput = {
   status?: PostStatus
   date: string
   time: string
+  body?: string
+  link?: string
+  mediaUrl?: string
+  platformId?: string
+}
+
+export type PubloraConnection = {
+  platformId: string
+  platform: string
+  name: string
+}
+
+export type LaunchTask = {
+  _id?: string
+  title: string
+  done: boolean
 }
 
 export type Launch = {
@@ -293,6 +350,7 @@ export type Launch = {
   projectId: string
   stage: LaunchStage
   date: string
+  tasks: LaunchTask[]
   tasksDone: number
   tasksTotal: number
   channels: AdChannel[]
@@ -303,8 +361,7 @@ export type LaunchInput = {
   projectId: string
   stage?: LaunchStage
   date: string
-  tasksDone?: number
-  tasksTotal?: number
+  tasks?: LaunchTask[]
   channels?: AdChannel[]
 }
 

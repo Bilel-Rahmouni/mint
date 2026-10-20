@@ -4,6 +4,7 @@ import { LaunchCard } from '../components/LaunchCard'
 import { LaunchModal } from '../components/LaunchModal'
 import { Loader } from '../components/Loader'
 import { PageHeader } from '../components/PageHeader'
+import { TodoBoard } from '../components/TodoBoard'
 import { Button } from '../components/ui/Button'
 import { useProjects } from '../hooks/useProjects'
 import { api } from '../lib/api'
@@ -42,6 +43,8 @@ export function LaunchesPage() {
       />
 
       {error && <p className="launches__error">{error}</p>}
+
+      <TodoBoard projects={projects} area="launch" areas={['launch']} />
 
       <div className="launches__board">
         {launchStages.map((stage, col) => {

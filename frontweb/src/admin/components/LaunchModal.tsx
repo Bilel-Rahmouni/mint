@@ -3,11 +3,14 @@ import type { FormEvent } from 'react'
 import { api } from '../lib/api'
 import { daysFromToday } from '../lib/dates'
 import { adChannels, launchStages } from '../lib/growth'
-import type { AdChannel, Launch, LaunchInput, LaunchStage, Project } from '../lib/types'
+import type { AdChannel, Launch, LaunchInput, LaunchStage, LaunchTask, Project } from '../lib/types'
 import { Button } from './ui/Button'
 import { Field, SelectField } from './ui/Field'
 import { Modal } from './ui/Modal'
 import './LaunchModal.css'
+
+const STARTER_TASKS: LaunchTask[] = ['Listing', 'Screenshots', 'Privacy', 'First post', 'Ads']
+  .map((title) => ({ title, done: false }))
 
 type Props = {
   launch?: Launch
@@ -23,19 +26,36 @@ function toForm(launch?: Launch, projectId = ''): LaunchInput {
     projectId: launch?.projectId ?? projectId,
     stage: launch?.stage ?? 'Idea',
     date: launch?.date ?? daysFromToday(14),
-    tasksDone: launch?.tasksDone ?? 0,
-    tasksTotal: launch?.tasksTotal ?? 0,
+    tasks: launch ? (launch.tasks ?? []) : STARTER_TASKS,
     channels: launch?.channels ?? [],
   }
 }
 
 export function LaunchModal({ launch, projects, onClose, onSaved, onDeleted }: Props) {
   const [form, setForm] = useState<LaunchInput>(() => toForm(launch, projects[0]?._id ?? ''))
+  const [draft, setDraft] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const set = <K extends keyof LaunchInput>(key: K, value: LaunchInput[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }))
+
+  const tasks = form.tasks ?? []
+
+  const toggleTask = (index: number) => {
+    set('tasks', tasks.map((task, i) => (i === index ? { ...task, done: !task.done } : task)))
+  }
+
+  const removeTask = (index: number) => {
+    set('tasks', tasks.filter((_, i) => i !== index))
+  }
+
+  const addTask = () => {
+    const title = draft.trim()
+    if (!title) return
+    set('tasks', [...tasks, { title, done: false }])
+    setDraft('')
+  }
 
   const toggleChannel = (channel: AdChannel) => {
     const current = form.channels ?? []
@@ -114,20 +134,38 @@ export function LaunchModal({ launch, projects, onClose, onSaved, onDeleted }: P
           ))}
         </SelectField>
         <Field label="Date" type="date" value={form.date} onChange={(e) => set('date', e.target.value)} required />
-        <Field
-          label="Tasks done"
-          type="number"
-          min={0}
-          value={form.tasksDone ?? 0}
-          onChange={(e) => set('tasksDone', Number(e.target.value))}
-        />
-        <Field
-          label="Tasks total"
-          type="number"
-          min={0}
-          value={form.tasksTotal ?? 0}
-          onChange={(e) => set('tasksTotal', Number(e.target.value))}
-        />
+        <div className="launch-modal__tasks">
+          <span className="launch-modal__tasks-label">Tasks</span>
+          <ul>
+            {tasks.map((task, index) => (
+              <li key={`${task.title}-${index}`}>
+                <label>
+                  <input type="checkbox" checked={task.done} onChange={() => toggleTask(index)} />
+                  <span>{task.title}</span>
+                </label>
+                <button type="button" onClick={() => removeTask(index)} aria-label={`Remove ${task.title}`}>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="launch-modal__add">
+            <Field
+              label="Task"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  addTask()
+                }
+              }}
+            />
+            <Button type="button" size="sm" onClick={addTask}>
+              Add
+            </Button>
+          </div>
+        </div>
         <fieldset className="launch-modal__channels">
           <legend>Channels</legend>
           {(Object.keys(adChannels) as AdChannel[]).map((key) => (

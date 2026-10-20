@@ -7,6 +7,7 @@ import { PageHeader } from '../components/PageHeader'
 import { Panel } from '../components/Panel'
 import { ProgressBar } from '../components/ProgressBar'
 import { StatCard } from '../components/StatCard'
+import { TodoBoard } from '../components/TodoBoard'
 import { Button } from '../components/ui/Button'
 import { Segmented } from '../components/ui/Segmented'
 import { Tag } from '../components/ui/Tag'
@@ -26,6 +27,7 @@ export function CampaignsPage() {
   const [error, setError] = useState<string | null>(null)
   const [status, setStatus] = useState<StatusFilter>('All')
   const [editing, setEditing] = useState<Campaign | null | 'new'>(null)
+  const [syncing, setSyncing] = useState(false)
 
   useEffect(() => {
     api
@@ -36,6 +38,20 @@ export function CampaignsPage() {
   }, [])
 
   const nameOf = (id: string) => projects.find((p) => p._id === id)?.name ?? '—'
+
+  const syncAds = async () => {
+    setSyncing(true)
+    setError(null)
+    try {
+      const result = await api.syncGoogleAds()
+      if (!result.configured) setError(result.message || 'Google Ads is not configured')
+      else setCampaigns(result.campaigns)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Google Ads sync failed')
+    } finally {
+      setSyncing(false)
+    }
+  }
 
   const rows = useMemo(
     () => (status === 'All' ? campaigns : campaigns.filter((c) => c.status === status)),
@@ -149,6 +165,9 @@ export function CampaignsPage() {
               ]}
               onChange={setStatus}
             />
+            <Button variant="subtle" size="sm" icon="refresh" loading={syncing} onClick={syncAds}>
+              Sync
+            </Button>
             <Button variant="primary" size="sm" icon="plus" onClick={() => setEditing('new')}>
               New
             </Button>
@@ -157,6 +176,8 @@ export function CampaignsPage() {
       />
 
       {error && <p className="campaigns__error">{error}</p>}
+
+      <TodoBoard projects={projects} area="ads" areas={['ads']} />
 
       <div className="campaigns__stats">
         <StatCard label="Budget" value={formatMoney(totals.budget)} index={0} />

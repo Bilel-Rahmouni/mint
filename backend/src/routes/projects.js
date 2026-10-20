@@ -161,7 +161,7 @@ router.get('/:id', async (req, res) => {
   const now = Date.now()
   const ids = [project._id]
 
-  const [checks, s24, s7, s30] = await Promise.all([
+  const [checks, s24, s7, s30, spendRows] = await Promise.all([
     Check.find({ projectId: project._id, checkedAt: { $gte: new Date(now - RANGES[range]) } })
       .sort({ checkedAt: 1 })
       .select('up statusCode responseTimeMs error checkedAt -_id')
@@ -169,9 +169,15 @@ router.get('/:id', async (req, res) => {
     uptimeStatsSince(new Date(now - RANGES['24h']), ids),
     uptimeStatsSince(new Date(now - RANGES['7d']), ids),
     uptimeStatsSince(new Date(now - RANGES['30d']), ids),
+    Campaign.find({
+      projectId: project._id,
+      start: { $lte: new Date(now).toISOString().slice(0, 10) },
+      end: { $gte: new Date(now - RANGES['30d']).toISOString().slice(0, 10) },
+    }).select('spent').lean(),
   ])
 
   const key = String(project._id)
+  project.adSpend30d = Math.round(spendRows.reduce((sum, row) => sum + (row.spent || 0), 0) * 100) / 100
   const summary = (map) => {
     const s = map.get(key)
     return { uptimePct: s?.uptimePct ?? null, avgResponseMs: s?.avgResponseMs ?? null }

@@ -13,7 +13,8 @@ const STATE_PURPOSE = 'google-oauth'
 
 export const ADMOB_SCOPE = 'https://www.googleapis.com/auth/admob.readonly'
 export const ADSENSE_SCOPE = 'https://www.googleapis.com/auth/adsense.readonly'
-const SCOPES = ['openid', 'email', ADMOB_SCOPE, ADSENSE_SCOPE]
+export const ADS_SCOPE = 'https://www.googleapis.com/auth/adwords'
+const SCOPES = ['openid', 'email', ADMOB_SCOPE, ADSENSE_SCOPE, ADS_SCOPE]
 
 export class NotConnectedError extends Error {}
 
